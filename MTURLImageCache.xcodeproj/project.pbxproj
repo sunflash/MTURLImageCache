@@ -19,6 +19,27 @@
 		339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA22B1A87FF31009DF431 /* DeviceInfo.m */; };
 		339CA2371A87FF31009DF431 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA22E1A87FF31009DF431 /* FirstViewController.m */; };
 		339CA2381A87FF31009DF431 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2301A87FF31009DF431 /* SecondViewController.m */; };
+		339CA26B1A880105009DF431 /* ACAccountStore+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA23B1A880105009DF431 /* ACAccountStore+PromiseKit.m */; };
+		339CA26C1A880105009DF431 /* AVAudioSession+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA23D1A880105009DF431 /* AVAudioSession+PromiseKit.m */; };
+		339CA26D1A880105009DF431 /* CALayer+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA23F1A880105009DF431 /* CALayer+PromiseKit.m */; };
+		339CA26E1A880105009DF431 /* CKContainer+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2411A880105009DF431 /* CKContainer+PromiseKit.m */; };
+		339CA26F1A880105009DF431 /* CKDatabase+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2431A880105009DF431 /* CKDatabase+PromiseKit.m */; };
+		339CA2701A880105009DF431 /* CLGeocoder+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2451A880105009DF431 /* CLGeocoder+PromiseKit.m */; };
+		339CA2711A880105009DF431 /* CLLocationManager+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2471A880105009DF431 /* CLLocationManager+PromiseKit.m */; };
+		339CA2721A880105009DF431 /* MKDirections+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2491A880105009DF431 /* MKDirections+PromiseKit.m */; };
+		339CA2731A880105009DF431 /* MKMapSnapshotter+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA24B1A880105009DF431 /* MKMapSnapshotter+PromiseKit.m */; };
+		339CA2741A880105009DF431 /* NSFileManager+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA24D1A880105009DF431 /* NSFileManager+PromiseKit.m */; };
+		339CA2751A880105009DF431 /* NSNotificationCenter+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA24F1A880105009DF431 /* NSNotificationCenter+PromiseKit.m */; };
+		339CA2781A880105009DF431 /* PMKPromise+Pause.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2541A880105009DF431 /* PMKPromise+Pause.m */; };
+		339CA2791A880105009DF431 /* PMKPromise+Until.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2551A880105009DF431 /* PMKPromise+Until.m */; };
+		339CA27A1A880105009DF431 /* PMKPromise+When.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2561A880105009DF431 /* PMKPromise+When.m */; };
+		339CA27B1A880105009DF431 /* PMKPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2571A880105009DF431 /* PMKPromise.m */; };
+		339CA27C1A880105009DF431 /* SKRequest+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2601A880105009DF431 /* SKRequest+PromiseKit.m */; };
+		339CA27D1A880105009DF431 /* SLRequest+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2621A880105009DF431 /* SLRequest+PromiseKit.m */; };
+		339CA27E1A880105009DF431 /* UIActionSheet+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2641A880105009DF431 /* UIActionSheet+PromiseKit.m */; };
+		339CA27F1A880105009DF431 /* UIAlertView+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2661A880105009DF431 /* UIAlertView+PromiseKit.m */; };
+		339CA2801A880105009DF431 /* UIView+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2681A880105009DF431 /* UIView+PromiseKit.m */; };
+		339CA2811A880105009DF431 /* UIViewController+PromiseKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA26A1A880105009DF431 /* UIViewController+PromiseKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +76,50 @@
 		339CA22E1A87FF31009DF431 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		339CA22F1A87FF31009DF431 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		339CA2301A87FF31009DF431 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		339CA23A1A880105009DF431 /* ACAccountStore+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ACAccountStore+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA23B1A880105009DF431 /* ACAccountStore+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ACAccountStore+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA23C1A880105009DF431 /* AVAudioSession+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA23D1A880105009DF431 /* AVAudioSession+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA23E1A880105009DF431 /* CALayer+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA23F1A880105009DF431 /* CALayer+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2401A880105009DF431 /* CKContainer+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CKContainer+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2411A880105009DF431 /* CKContainer+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CKContainer+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2421A880105009DF431 /* CKDatabase+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CKDatabase+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2431A880105009DF431 /* CKDatabase+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CKDatabase+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2441A880105009DF431 /* CLGeocoder+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLGeocoder+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2451A880105009DF431 /* CLGeocoder+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLGeocoder+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2461A880105009DF431 /* CLLocationManager+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2471A880105009DF431 /* CLLocationManager+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocationManager+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2481A880105009DF431 /* MKDirections+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKDirections+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2491A880105009DF431 /* MKDirections+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKDirections+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA24A1A880105009DF431 /* MKMapSnapshotter+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapSnapshotter+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA24B1A880105009DF431 /* MKMapSnapshotter+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapSnapshotter+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA24C1A880105009DF431 /* NSFileManager+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA24D1A880105009DF431 /* NSFileManager+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA24E1A880105009DF431 /* NSNotificationCenter+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA24F1A880105009DF431 /* NSNotificationCenter+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2541A880105009DF431 /* PMKPromise+Pause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PMKPromise+Pause.m"; sourceTree = "<group>"; };
+		339CA2551A880105009DF431 /* PMKPromise+Until.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PMKPromise+Until.m"; sourceTree = "<group>"; };
+		339CA2561A880105009DF431 /* PMKPromise+When.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PMKPromise+When.m"; sourceTree = "<group>"; };
+		339CA2571A880105009DF431 /* PMKPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMKPromise.m; sourceTree = "<group>"; };
+		339CA2591A880105009DF431 /* fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwd.h; sourceTree = "<group>"; };
+		339CA25A1A880105009DF431 /* Promise+Pause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Promise+Pause.h"; sourceTree = "<group>"; };
+		339CA25B1A880105009DF431 /* Promise+Until.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Promise+Until.h"; sourceTree = "<group>"; };
+		339CA25C1A880105009DF431 /* Promise+When.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Promise+When.h"; sourceTree = "<group>"; };
+		339CA25D1A880105009DF431 /* Promise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Promise.h; sourceTree = "<group>"; };
+		339CA25E1A880105009DF431 /* PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromiseKit.h; sourceTree = "<group>"; };
+		339CA25F1A880105009DF431 /* SKRequest+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKRequest+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2601A880105009DF431 /* SKRequest+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKRequest+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2611A880105009DF431 /* SLRequest+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SLRequest+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2621A880105009DF431 /* SLRequest+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SLRequest+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2631A880105009DF431 /* UIActionSheet+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2641A880105009DF431 /* UIActionSheet+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2651A880105009DF431 /* UIAlertView+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2661A880105009DF431 /* UIAlertView+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2671A880105009DF431 /* UIView+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA2681A880105009DF431 /* UIView+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PromiseKit.m"; sourceTree = "<group>"; };
+		339CA2691A880105009DF431 /* UIViewController+PromiseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+PromiseKit.h"; sourceTree = "<group>"; };
+		339CA26A1A880105009DF431 /* UIViewController+PromiseKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+PromiseKit.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,16 +221,9 @@
 		339CA2231A87FF31009DF431 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				339CA2241A87FF31009DF431 /* PromiseKit */,
+				339CA2391A880105009DF431 /* PromiseKit */,
 			);
 			path = ThirdParty;
-			sourceTree = "<group>";
-		};
-		339CA2241A87FF31009DF431 /* PromiseKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PromiseKit;
 			sourceTree = "<group>";
 		};
 		339CA2251A87FF31009DF431 /* Utilites */ = {
@@ -190,6 +248,65 @@
 				339CA2301A87FF31009DF431 /* SecondViewController.m */,
 			);
 			path = VC;
+			sourceTree = "<group>";
+		};
+		339CA2391A880105009DF431 /* PromiseKit */ = {
+			isa = PBXGroup;
+			children = (
+				339CA23A1A880105009DF431 /* ACAccountStore+PromiseKit.h */,
+				339CA23B1A880105009DF431 /* ACAccountStore+PromiseKit.m */,
+				339CA23C1A880105009DF431 /* AVAudioSession+PromiseKit.h */,
+				339CA23D1A880105009DF431 /* AVAudioSession+PromiseKit.m */,
+				339CA23E1A880105009DF431 /* CALayer+PromiseKit.h */,
+				339CA23F1A880105009DF431 /* CALayer+PromiseKit.m */,
+				339CA2401A880105009DF431 /* CKContainer+PromiseKit.h */,
+				339CA2411A880105009DF431 /* CKContainer+PromiseKit.m */,
+				339CA2421A880105009DF431 /* CKDatabase+PromiseKit.h */,
+				339CA2431A880105009DF431 /* CKDatabase+PromiseKit.m */,
+				339CA2441A880105009DF431 /* CLGeocoder+PromiseKit.h */,
+				339CA2451A880105009DF431 /* CLGeocoder+PromiseKit.m */,
+				339CA2461A880105009DF431 /* CLLocationManager+PromiseKit.h */,
+				339CA2471A880105009DF431 /* CLLocationManager+PromiseKit.m */,
+				339CA2481A880105009DF431 /* MKDirections+PromiseKit.h */,
+				339CA2491A880105009DF431 /* MKDirections+PromiseKit.m */,
+				339CA24A1A880105009DF431 /* MKMapSnapshotter+PromiseKit.h */,
+				339CA24B1A880105009DF431 /* MKMapSnapshotter+PromiseKit.m */,
+				339CA24C1A880105009DF431 /* NSFileManager+PromiseKit.h */,
+				339CA24D1A880105009DF431 /* NSFileManager+PromiseKit.m */,
+				339CA24E1A880105009DF431 /* NSNotificationCenter+PromiseKit.h */,
+				339CA24F1A880105009DF431 /* NSNotificationCenter+PromiseKit.m */,
+				339CA2541A880105009DF431 /* PMKPromise+Pause.m */,
+				339CA2551A880105009DF431 /* PMKPromise+Until.m */,
+				339CA2561A880105009DF431 /* PMKPromise+When.m */,
+				339CA2571A880105009DF431 /* PMKPromise.m */,
+				339CA2581A880105009DF431 /* PromiseKit */,
+				339CA25E1A880105009DF431 /* PromiseKit.h */,
+				339CA25F1A880105009DF431 /* SKRequest+PromiseKit.h */,
+				339CA2601A880105009DF431 /* SKRequest+PromiseKit.m */,
+				339CA2611A880105009DF431 /* SLRequest+PromiseKit.h */,
+				339CA2621A880105009DF431 /* SLRequest+PromiseKit.m */,
+				339CA2631A880105009DF431 /* UIActionSheet+PromiseKit.h */,
+				339CA2641A880105009DF431 /* UIActionSheet+PromiseKit.m */,
+				339CA2651A880105009DF431 /* UIAlertView+PromiseKit.h */,
+				339CA2661A880105009DF431 /* UIAlertView+PromiseKit.m */,
+				339CA2671A880105009DF431 /* UIView+PromiseKit.h */,
+				339CA2681A880105009DF431 /* UIView+PromiseKit.m */,
+				339CA2691A880105009DF431 /* UIViewController+PromiseKit.h */,
+				339CA26A1A880105009DF431 /* UIViewController+PromiseKit.m */,
+			);
+			path = PromiseKit;
+			sourceTree = "<group>";
+		};
+		339CA2581A880105009DF431 /* PromiseKit */ = {
+			isa = PBXGroup;
+			children = (
+				339CA2591A880105009DF431 /* fwd.h */,
+				339CA25A1A880105009DF431 /* Promise+Pause.h */,
+				339CA25B1A880105009DF431 /* Promise+Until.h */,
+				339CA25C1A880105009DF431 /* Promise+When.h */,
+				339CA25D1A880105009DF431 /* Promise.h */,
+			);
+			path = PromiseKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,14 +409,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				339CA27E1A880105009DF431 /* UIActionSheet+PromiseKit.m in Sources */,
 				339CA2351A87FF31009DF431 /* Configuration.m in Sources */,
+				339CA26F1A880105009DF431 /* CKDatabase+PromiseKit.m in Sources */,
+				339CA2721A880105009DF431 /* MKDirections+PromiseKit.m in Sources */,
 				339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */,
 				339CA2371A87FF31009DF431 /* FirstViewController.m in Sources */,
+				339CA26C1A880105009DF431 /* AVAudioSession+PromiseKit.m in Sources */,
+				339CA27D1A880105009DF431 /* SLRequest+PromiseKit.m in Sources */,
 				339CA2321A87FF31009DF431 /* main.m in Sources */,
+				339CA26B1A880105009DF431 /* ACAccountStore+PromiseKit.m in Sources */,
+				339CA2751A880105009DF431 /* NSNotificationCenter+PromiseKit.m in Sources */,
+				339CA26D1A880105009DF431 /* CALayer+PromiseKit.m in Sources */,
+				339CA2811A880105009DF431 /* UIViewController+PromiseKit.m in Sources */,
 				339CA2381A87FF31009DF431 /* SecondViewController.m in Sources */,
+				339CA2711A880105009DF431 /* CLLocationManager+PromiseKit.m in Sources */,
+				339CA2701A880105009DF431 /* CLGeocoder+PromiseKit.m in Sources */,
 				339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */,
+				339CA2791A880105009DF431 /* PMKPromise+Until.m in Sources */,
+				339CA27B1A880105009DF431 /* PMKPromise.m in Sources */,
+				339CA27A1A880105009DF431 /* PMKPromise+When.m in Sources */,
 				339CA2311A87FF31009DF431 /* AppDelegate.m in Sources */,
+				339CA26E1A880105009DF431 /* CKContainer+PromiseKit.m in Sources */,
+				339CA2801A880105009DF431 /* UIView+PromiseKit.m in Sources */,
+				339CA2741A880105009DF431 /* NSFileManager+PromiseKit.m in Sources */,
+				339CA27C1A880105009DF431 /* SKRequest+PromiseKit.m in Sources */,
+				339CA2781A880105009DF431 /* PMKPromise+Pause.m in Sources */,
+				339CA27F1A880105009DF431 /* UIAlertView+PromiseKit.m in Sources */,
 				339CA2341A87FF31009DF431 /* AppDirectory.m in Sources */,
+				339CA2731A880105009DF431 /* MKMapSnapshotter+PromiseKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +628,7 @@
 				339CA2181A87FEBB009DF431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		339CA2191A87FEBB009DF431 /* Build configuration list for PBXNativeTarget "MTURLImageCacheTests" */ = {
 			isa = XCConfigurationList;
@@ -498,6 +637,7 @@
 				339CA21B1A87FEBB009DF431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
