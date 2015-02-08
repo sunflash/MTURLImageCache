@@ -2,11 +2,12 @@
 //  AppDelegate.m
 //  MTURLImageCache
 //
-//  Created by Neon on 08/02/15.
+//  Created by Neon on 04/02/15.
 //  Copyright (c) 2015 MineTilbud. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "AppDirectory.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +15,11 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSLog(@"Cache %@",[AppDirectory applicationCachePath]);
+    
     return YES;
 }
 

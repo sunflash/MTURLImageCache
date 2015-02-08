@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		339CA1F61A87FEBB009DF431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA1F51A87FEBB009DF431 /* main.m */; };
-		339CA1F91A87FEBB009DF431 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA1F81A87FEBB009DF431 /* AppDelegate.m */; };
-		339CA1FC1A87FEBB009DF431 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA1FB1A87FEBB009DF431 /* FirstViewController.m */; };
-		339CA1FF1A87FEBB009DF431 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA1FE1A87FEBB009DF431 /* SecondViewController.m */; };
 		339CA2021A87FEBB009DF431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2001A87FEBB009DF431 /* Main.storyboard */; };
 		339CA2041A87FEBB009DF431 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2031A87FEBB009DF431 /* Images.xcassets */; };
 		339CA2071A87FEBB009DF431 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2051A87FEBB009DF431 /* LaunchScreen.xib */; };
 		339CA2131A87FEBB009DF431 /* MTURLImageCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2121A87FEBB009DF431 /* MTURLImageCacheTests.m */; };
+		339CA2311A87FF31009DF431 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA21E1A87FF31009DF431 /* AppDelegate.m */; };
+		339CA2321A87FF31009DF431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA21F1A87FF31009DF431 /* main.m */; };
+		339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2221A87FF31009DF431 /* MTURLImageCache.m */; };
+		339CA2341A87FF31009DF431 /* AppDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2271A87FF31009DF431 /* AppDirectory.m */; };
+		339CA2351A87FF31009DF431 /* Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2291A87FF31009DF431 /* Configuration.m */; };
+		339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA22B1A87FF31009DF431 /* DeviceInfo.m */; };
+		339CA2371A87FF31009DF431 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA22E1A87FF31009DF431 /* FirstViewController.m */; };
+		339CA2381A87FF31009DF431 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2301A87FF31009DF431 /* SecondViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,19 +34,27 @@
 /* Begin PBXFileReference section */
 		339CA1F01A87FEBB009DF431 /* MTURLImageCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTURLImageCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339CA1F41A87FEBB009DF431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		339CA1F51A87FEBB009DF431 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		339CA1F71A87FEBB009DF431 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		339CA1F81A87FEBB009DF431 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		339CA1FA1A87FEBB009DF431 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		339CA1FB1A87FEBB009DF431 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		339CA1FD1A87FEBB009DF431 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		339CA1FE1A87FEBB009DF431 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		339CA2011A87FEBB009DF431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		339CA2031A87FEBB009DF431 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		339CA2061A87FEBB009DF431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		339CA20C1A87FEBB009DF431 /* MTURLImageCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTURLImageCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		339CA2111A87FEBB009DF431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		339CA2121A87FEBB009DF431 /* MTURLImageCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTURLImageCacheTests.m; sourceTree = "<group>"; };
+		339CA21D1A87FF31009DF431 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		339CA21E1A87FF31009DF431 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		339CA21F1A87FF31009DF431 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		339CA2211A87FF31009DF431 /* MTURLImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTURLImageCache.h; sourceTree = "<group>"; };
+		339CA2221A87FF31009DF431 /* MTURLImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTURLImageCache.m; sourceTree = "<group>"; };
+		339CA2261A87FF31009DF431 /* AppDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDirectory.h; sourceTree = "<group>"; };
+		339CA2271A87FF31009DF431 /* AppDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDirectory.m; sourceTree = "<group>"; };
+		339CA2281A87FF31009DF431 /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configuration.h; sourceTree = "<group>"; };
+		339CA2291A87FF31009DF431 /* Configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Configuration.m; sourceTree = "<group>"; };
+		339CA22A1A87FF31009DF431 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
+		339CA22B1A87FF31009DF431 /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
+		339CA22D1A87FF31009DF431 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		339CA22E1A87FF31009DF431 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		339CA22F1A87FF31009DF431 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		339CA2301A87FF31009DF431 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,16 +96,15 @@
 		339CA1F21A87FEBB009DF431 /* MTURLImageCache */ = {
 			isa = PBXGroup;
 			children = (
-				339CA1F71A87FEBB009DF431 /* AppDelegate.h */,
-				339CA1F81A87FEBB009DF431 /* AppDelegate.m */,
-				339CA1FA1A87FEBB009DF431 /* FirstViewController.h */,
-				339CA1FB1A87FEBB009DF431 /* FirstViewController.m */,
-				339CA1FD1A87FEBB009DF431 /* SecondViewController.h */,
-				339CA1FE1A87FEBB009DF431 /* SecondViewController.m */,
+				339CA2251A87FF31009DF431 /* Utilites */,
+				339CA22C1A87FF31009DF431 /* VC */,
+				339CA2201A87FF31009DF431 /* MTURLCache */,
 				339CA2001A87FEBB009DF431 /* Main.storyboard */,
-				339CA2031A87FEBB009DF431 /* Images.xcassets */,
 				339CA2051A87FEBB009DF431 /* LaunchScreen.xib */,
+				339CA2031A87FEBB009DF431 /* Images.xcassets */,
+				339CA21C1A87FF31009DF431 /* Main */,
 				339CA1F31A87FEBB009DF431 /* Supporting Files */,
+				339CA2231A87FF31009DF431 /* ThirdParty */,
 			);
 			path = MTURLImageCache;
 			sourceTree = "<group>";
@@ -102,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				339CA1F41A87FEBB009DF431 /* Info.plist */,
-				339CA1F51A87FEBB009DF431 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -122,6 +132,64 @@
 				339CA2111A87FEBB009DF431 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		339CA21C1A87FF31009DF431 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				339CA21D1A87FF31009DF431 /* AppDelegate.h */,
+				339CA21E1A87FF31009DF431 /* AppDelegate.m */,
+				339CA21F1A87FF31009DF431 /* main.m */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		339CA2201A87FF31009DF431 /* MTURLCache */ = {
+			isa = PBXGroup;
+			children = (
+				339CA2211A87FF31009DF431 /* MTURLImageCache.h */,
+				339CA2221A87FF31009DF431 /* MTURLImageCache.m */,
+			);
+			path = MTURLCache;
+			sourceTree = "<group>";
+		};
+		339CA2231A87FF31009DF431 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				339CA2241A87FF31009DF431 /* PromiseKit */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		339CA2241A87FF31009DF431 /* PromiseKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PromiseKit;
+			sourceTree = "<group>";
+		};
+		339CA2251A87FF31009DF431 /* Utilites */ = {
+			isa = PBXGroup;
+			children = (
+				339CA2261A87FF31009DF431 /* AppDirectory.h */,
+				339CA2271A87FF31009DF431 /* AppDirectory.m */,
+				339CA2281A87FF31009DF431 /* Configuration.h */,
+				339CA2291A87FF31009DF431 /* Configuration.m */,
+				339CA22A1A87FF31009DF431 /* DeviceInfo.h */,
+				339CA22B1A87FF31009DF431 /* DeviceInfo.m */,
+			);
+			path = Utilites;
+			sourceTree = "<group>";
+		};
+		339CA22C1A87FF31009DF431 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				339CA22D1A87FF31009DF431 /* FirstViewController.h */,
+				339CA22E1A87FF31009DF431 /* FirstViewController.m */,
+				339CA22F1A87FF31009DF431 /* SecondViewController.h */,
+				339CA2301A87FF31009DF431 /* SecondViewController.m */,
+			);
+			path = VC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,10 +292,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				339CA1FF1A87FEBB009DF431 /* SecondViewController.m in Sources */,
-				339CA1F91A87FEBB009DF431 /* AppDelegate.m in Sources */,
-				339CA1FC1A87FEBB009DF431 /* FirstViewController.m in Sources */,
-				339CA1F61A87FEBB009DF431 /* main.m in Sources */,
+				339CA2351A87FF31009DF431 /* Configuration.m in Sources */,
+				339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */,
+				339CA2371A87FF31009DF431 /* FirstViewController.m in Sources */,
+				339CA2321A87FF31009DF431 /* main.m in Sources */,
+				339CA2381A87FF31009DF431 /* SecondViewController.m in Sources */,
+				339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */,
+				339CA2311A87FF31009DF431 /* AppDelegate.m in Sources */,
+				339CA2341A87FF31009DF431 /* AppDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
