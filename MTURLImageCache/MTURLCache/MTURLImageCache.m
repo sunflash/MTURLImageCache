@@ -74,7 +74,7 @@
 
 #pragma mark - Fuction
 
--(void)getImageFromURL:(NSString *)urlString withCachePolicy:(MTURLImageCachePolicies)cachePolicy completionHandler:(MTImageCacheResponse)completionHandler {
+-(void)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler {
     
     NSDate *start = [NSDate date];
     

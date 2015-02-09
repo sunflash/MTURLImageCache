@@ -13,12 +13,6 @@
 #define defaultExpiredMaxAgeInSeconds    86400
 #define defaultMaxCachePeriodInDays      21
 
-typedef NS_ENUM(NSUInteger, MTURLImageCachePolicies) {
-    
-    DeleteExpiredFile,
-    KeepExpiredFileUntilReplace
-};
-
 typedef void (^MTImageCacheResponse)(BOOL success,UIImage *image, NSTimeInterval fetchTime, NSString *errorMessage);
 
 @interface MTURLImageCache : NSObject
@@ -36,6 +30,6 @@ typedef void (^MTImageCacheResponse)(BOOL success,UIImage *image, NSTimeInterval
 
 + (id)sharedMTURLImageCache;
 
--(void)getImageFromURL:(NSString *)urlString withCachePolicy:(MTURLImageCachePolicies)cachePolicy completionHandler:(MTImageCacheResponse)completionHandler;
+-(void)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler;
 
 @end
