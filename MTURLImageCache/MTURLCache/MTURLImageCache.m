@@ -34,7 +34,6 @@
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         self.urlSession                          = [NSURLSession sessionWithConfiguration:configuration];
         self.expiredMaxAgeInSeconds              = defaultExpiredMaxAgeInSeconds;
-        self.maxCachePeriod                      = defaultMaxCachePeriodInDays;
         self.cacheFolderName                     = (name && name.length > 0) ? name : @"default";
     }
     
@@ -52,7 +51,6 @@
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         urlImageCache.urlSession                 = [NSURLSession sessionWithConfiguration:configuration];
         urlImageCache.expiredMaxAgeInSeconds     = defaultExpiredMaxAgeInSeconds;
-        urlImageCache.maxCachePeriod             = defaultMaxCachePeriodInDays;
         urlImageCache.cacheFolderName            = @"default";
     });
     
@@ -269,5 +267,24 @@
     
     return isValidImage;
 }
+
+//-------------------------------------------------------------------------------------------------------------
+
+#pragma mark - Disk clean
+
+-(void)removeCacheFileFromDisk:(NSString*)urlString {
+    
+    
+    
+
+}
+
+
++(void)cleanDiskWithCompletion:()completionBlock {
+
+    
+
+}
+
 
 @end

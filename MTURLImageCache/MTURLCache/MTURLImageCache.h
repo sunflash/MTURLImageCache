@@ -10,10 +10,13 @@
 @import UIKit;
 
 #define defulatCacheRootFolderName       @"MTUCF"
-#define defaultExpiredMaxAgeInSeconds    86400
 #define defaultMaxCachePeriodInDays      21
+#define defaultGlobalDiskCapacityMB      100
+
+#define defaultExpiredMaxAgeInSeconds    86400
 
 typedef void (^MTImageCacheResponse)(BOOL success,UIImage *image, NSTimeInterval fetchTime, NSString *errorMessage);
+typedef void (^MTImageCacheCleanStat) (NSTimeInterval cleanTime);
 
 @interface MTURLImageCache : NSObject
 
@@ -22,9 +25,6 @@ typedef void (^MTImageCacheResponse)(BOOL success,UIImage *image, NSTimeInterval
 
 // Default 1 day, 60*60*24
 @property (nonatomic) NSTimeInterval expiredMaxAgeInSeconds;
-
-// Default 21 day, no matter of which cachePolicies is used, prevent unused data fill up disk space
-@property (nonatomic) float maxCachePeriod;
 
 -(instancetype)initWithName:(NSString*)name;
 
