@@ -31,6 +31,8 @@
 		339CA3061A88182C009DF431 /* BFURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2F61A88182C009DF431 /* BFURL.m */; };
 		339CA3071A88182C009DF431 /* BFWebViewAppLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2F91A88182C009DF431 /* BFWebViewAppLinkResolver.m */; };
 		339CA3081A88182C009DF431 /* Bolts.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2FB1A88182C009DF431 /* Bolts.m */; };
+		339CA30B1A882B95009DF431 /* ImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA30A1A882B95009DF431 /* ImageDecoder.m */; };
+		339CA30E1A882BFF009DF431 /* CryptoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA30D1A882BFF009DF431 /* CryptoHash.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,10 @@
 		339CA2FA1A88182C009DF431 /* Bolts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bolts.h; sourceTree = "<group>"; };
 		339CA2FB1A88182C009DF431 /* Bolts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bolts.m; sourceTree = "<group>"; };
 		339CA2FC1A88182C009DF431 /* BoltsVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoltsVersion.h; sourceTree = "<group>"; };
+		339CA3091A882B95009DF431 /* ImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDecoder.h; sourceTree = "<group>"; };
+		339CA30A1A882B95009DF431 /* ImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDecoder.m; sourceTree = "<group>"; };
+		339CA30C1A882BFF009DF431 /* CryptoHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoHash.h; sourceTree = "<group>"; };
+		339CA30D1A882BFF009DF431 /* CryptoHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoHash.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +197,10 @@
 			children = (
 				339CA2211A87FF31009DF431 /* MTURLImageCache.h */,
 				339CA2221A87FF31009DF431 /* MTURLImageCache.m */,
+				339CA3091A882B95009DF431 /* ImageDecoder.h */,
+				339CA30A1A882B95009DF431 /* ImageDecoder.m */,
+				339CA30C1A882BFF009DF431 /* CryptoHash.h */,
+				339CA30D1A882BFF009DF431 /* CryptoHash.m */,
 			);
 			path = MTURLCache;
 			sourceTree = "<group>";
@@ -364,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				339CA30E1A882BFF009DF431 /* CryptoHash.m in Sources */,
 				339CA2351A87FF31009DF431 /* Configuration.m in Sources */,
 				339CA3011A88182C009DF431 /* BFAppLinkTarget.m in Sources */,
 				339CA3081A88182C009DF431 /* Bolts.m in Sources */,
@@ -382,6 +393,7 @@
 				339CA2FE1A88182C009DF431 /* BFAppLinkNavigation.m in Sources */,
 				339CA2FD1A88182C009DF431 /* BFAppLink.m in Sources */,
 				339CA2341A87FF31009DF431 /* AppDirectory.m in Sources */,
+				339CA30B1A882B95009DF431 /* ImageDecoder.m in Sources */,
 				339CA3041A88182C009DF431 /* BFTask.m in Sources */,
 				339CA3031A88182C009DF431 /* BFMeasurementEvent.m in Sources */,
 			);
