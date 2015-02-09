@@ -78,6 +78,10 @@
     
     NSDate *start = [NSDate date];
     
+    BFExecutor *mainQueue = [BFExecutor executorWithBlock:^void(void(^block)()) {
+        dispatch_async(dispatch_get_main_queue(), block);
+    }];
+    
     [[[[[self isValidURLString:urlString] continueWithSuccessBlock:^id(BFTask *task) {
      
         return [self getImagePath:urlString];
@@ -106,7 +110,7 @@
         if (isImageExpired == YES) return [self fetchImage:@{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageAvailable)}];
         else                       return nil;
         
-    }] continueWithSuccessBlock:^id(BFTask *task) {
+    }] continueWithExecutor:mainQueue withSuccessBlock:^id(BFTask *task) {
         
         UIImage *image = task.result;
         completionHandler(YES,image,[self elapsedTimeSinceDate:start],nil);
