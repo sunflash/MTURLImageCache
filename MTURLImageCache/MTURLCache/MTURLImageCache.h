@@ -32,6 +32,8 @@ typedef void (^MTImageCacheResponse)(BOOL success,UIImage *image, NSTimeInterval
 // Default 21 day, no matter of which cachePolicies is used, prevent unused data fill up disk space
 @property (nonatomic) float maxCachePeriod;
 
+-(instancetype)initWithName:(NSString*)name;
+
 + (id)sharedMTURLImageCache;
 
 -(void)getImageFromURL:(NSString *)urlString withCachePolicy:(MTURLImageCachePolicies)cachePolicy completionHandler:(MTImageCacheResponse)completionHandler;

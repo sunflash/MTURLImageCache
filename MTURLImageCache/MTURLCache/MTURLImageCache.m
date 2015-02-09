@@ -25,6 +25,22 @@
 
 #pragma mark - Property
 
+-(instancetype)initWithName:(NSString*)name; {
+    
+    self = [super init];
+    
+    if (self) {
+        
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        self.urlSession                          = [NSURLSession sessionWithConfiguration:configuration];
+        self.expiredMaxAgeInSeconds              = defaultExpiredMaxAgeInSeconds;
+        self.maxCachePeriod                      = defaultMaxCachePeriodInDays;
+        self.cacheFolderName                     = (name && name.length > 0) ? name : @"default";
+    }
+    
+    return self;
+}
+
 + (id)sharedMTURLImageCache {
     
     static MTURLImageCache *urlImageCache = nil;
@@ -37,7 +53,7 @@
         urlImageCache.urlSession                 = [NSURLSession sessionWithConfiguration:configuration];
         urlImageCache.expiredMaxAgeInSeconds     = defaultExpiredMaxAgeInSeconds;
         urlImageCache.maxCachePeriod             = defaultMaxCachePeriodInDays;
-        urlImageCache.cacheFolderName            = defulatCacheRootFolderName;
+        urlImageCache.cacheFolderName            = @"default";
     });
     
     return urlImageCache;
@@ -70,6 +86,7 @@
         
         NSString *filePath = (NSString*)task.result;
         BOOL isImageExpired = YES;
+        BOOL isCacheImageAvailable = NO;
         
         NSError *error;
         
@@ -81,11 +98,12 @@
             
                 completionHandler(YES,image,[self elapsedTimeSinceDate:start],nil);
                 isImageExpired = [self isImageExpired:filePath];
+                isCacheImageAvailable = YES;
             }
             else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
         }
         
-        if (isImageExpired == YES) return [self fetchImage:@{@"url":urlString,@"filePath":filePath}];
+        if (isImageExpired == YES) return [self fetchImage:@{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageAvailable)}];
         else                       return nil;
         
     }] continueWithSuccessBlock:^id(BFTask *task) {
@@ -97,9 +115,15 @@
     }] continueWithBlock:^id(BFTask *task) {
         
         if (task.error) {
-        
-            NSString *errorMessage = task.error.domain;
-            completionHandler (NO,nil,0,errorMessage);
+            
+            BOOL isCacheImageUsed = NO;
+            if (task.error.userInfo) isCacheImageUsed = [task.error.userInfo[@"isCacheImageUsed"] boolValue];
+            
+            if (!isCacheImageUsed) {
+                
+                NSString *errorMessage = task.error.domain;
+                completionHandler (NO,nil,0,errorMessage);
+            }
         }
         return nil;
     }];
@@ -122,9 +146,7 @@
 
 -(BFTask*)getImagePath:(NSString*)urlString {
     
-    NSString *filePath = [AppDirectory applicationCachePath];
-    [filePath stringByAppendingPathComponent:self.cacheFolderName];
-    [filePath stringByAppendingPathComponent:[CryptoHash md5:urlString]];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName,[CryptoHash md5:urlString]];
     return [BFTask taskWithResult:filePath];
 }
 
@@ -135,12 +157,12 @@
         NSString *urlString = imageInfo[@"url"];
         NSString *filePath = imageInfo[@"filePath"];
         
-        if (!urlString || !filePath) return [BFTask taskWithError:[NSError errorWithDomain:@"No image info" code:2 userInfo:nil]];
+        if (!urlString || !filePath) return [BFTask taskWithError:[NSError errorWithDomain:@"No image info" code:2 userInfo:imageInfo]];
         
-        NSString *folderPath = [[AppDirectory applicationCachePath] stringByAppendingPathComponent:self.cacheFolderName];
+        NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
         BOOL isFolderExist = [self createFolderIfNotExist:folderPath];
         
-        if (!isFolderExist) return [BFTask taskWithError:[NSError errorWithDomain:@"Create folder failed" code:3 userInfo:nil]];
+        if (!isFolderExist) return [BFTask taskWithError:[NSError errorWithDomain:@"Create folder failed" code:3 userInfo:imageInfo]];
         else {
             
             BFTaskCompletionSource *downloadTask = [BFTaskCompletionSource taskCompletionSource];
@@ -149,26 +171,30 @@
                
                 if (error || [MTURLImageCache isValidImage:response] == NO) {
                     
-                    [downloadTask setError:[NSError errorWithDomain:@"File download failed" code:4 userInfo:nil]];
+                    [downloadTask setError:[NSError errorWithDomain:@"File download failed" code:4 userInfo:imageInfo]];
                 }
+                else {
                 
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                [fileManager removeItemAtPath:filePath error:NULL];
-                BOOL success = [fileManager copyItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&error];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    [fileManager removeItemAtPath:filePath error:NULL];
+                    BOOL success = [fileManager copyItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&error];
                 
-                if (error || success == NO) {
-                    
-                    [downloadTask setError:[NSError errorWithDomain:@"File copy failed" code:5 userInfo:nil]];
-                }
-                
-                if (!error && success) {
-                    
-                    UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-                    if (image) [downloadTask setResult:image];
+                    if (error || success == NO) {
+                        
+                        [downloadTask setError:[NSError errorWithDomain:@"File copy failed" code:5 userInfo:imageInfo]];
+                    }
                     else {
                     
-                        [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-                        [downloadTask setError:[NSError errorWithDomain:@"File is not image" code:6 userInfo:nil]];
+                        if (!error && success) {
+                            
+                            UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+                            if (image) [downloadTask setResult:image];
+                            else {
+                                
+                                [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                                [downloadTask setError:[NSError errorWithDomain:@"File is not image" code:6 userInfo:imageInfo]];
+                            }
+                        }
                     }
                 }
                 
@@ -177,7 +203,7 @@
             return downloadTask.task;
         }
     }
-    else return [BFTask taskWithError:[NSError errorWithDomain:@"No image info" code:2 userInfo:nil]];
+    else return [BFTask taskWithError:[NSError errorWithDomain:@"No image info" code:2 userInfo:imageInfo]];
 }
 
 //-------------------------------------------------------------------------------------------------------------
