@@ -28,7 +28,7 @@
         <scene sceneID="yPW-9v-JLq">
             <objects>
                 <navigationController id="XE4-I3-x44" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Logo" id="0jX-O6-rbI"/>
+                    <tabBarItem key="tabBarItem" title="Logo" image="first" id="0jX-O6-rbI"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NdB-Xm-8Ed">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -45,7 +45,7 @@
         <scene sceneID="EsV-Fv-XOu">
             <objects>
                 <navigationController id="X2D-ys-L3g" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Header" id="h0s-U2-3eF"/>
+                    <tabBarItem key="tabBarItem" title="Header" image="second" id="h0s-U2-3eF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BWM-6V-jqH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -63,31 +63,31 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5Rp-HG-O3g">
-                            <size key="itemSize" width="145" height="145"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="5Rp-HG-O3g">
+                            <size key="itemSize" width="130" height="130"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Eo9-WB-bwi" customClass="ImageCollectionViewCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LogoCell" id="Eo9-WB-bwi" customClass="ImageCollectionViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oTi-ya-BAQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="oTi-ya-BAQ" secondAttribute="bottom" id="0QJ-dP-3q1"/>
-                                    <constraint firstItem="oTi-ya-BAQ" firstAttribute="top" secondItem="Eo9-WB-bwi" secondAttribute="top" id="5eU-sv-6AC"/>
-                                    <constraint firstItem="oTi-ya-BAQ" firstAttribute="leading" secondItem="Eo9-WB-bwi" secondAttribute="leading" id="7ty-Ej-5if"/>
-                                    <constraint firstAttribute="trailing" secondItem="oTi-ya-BAQ" secondAttribute="trailing" id="tcS-7R-3rJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="oTi-ya-BAQ" secondAttribute="bottom" id="0GQ-zC-jSZ"/>
+                                    <constraint firstItem="oTi-ya-BAQ" firstAttribute="top" secondItem="Eo9-WB-bwi" secondAttribute="top" id="QvH-eM-vse"/>
+                                    <constraint firstItem="oTi-ya-BAQ" firstAttribute="leading" secondItem="Eo9-WB-bwi" secondAttribute="leading" id="lqa-g9-woF"/>
+                                    <constraint firstAttribute="trailing" secondItem="oTi-ya-BAQ" secondAttribute="trailing" id="nfL-bL-OJH"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="oTi-ya-BAQ" id="sII-zf-Nm8"/>
@@ -107,4 +107,8 @@
             <point key="canvasLocation" x="1224" y="59"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="first" width="30" height="30"/>
+        <image name="second" width="30" height="30"/>
+    </resources>
 </document>

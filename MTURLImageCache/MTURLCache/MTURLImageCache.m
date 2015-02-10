@@ -86,7 +86,7 @@
         
     }] continueWithSuccessBlock:^id(BFTask *task) {
         
-        NSString *filePath = (NSString*)task.result;
+        NSString *filePath = task.result;
         BOOL isImageExpired = YES;
         BOOL isCacheImageAvailable = NO;
         
@@ -110,8 +110,12 @@
         
     }] continueWithExecutor:mainQueue withSuccessBlock:^id(BFTask *task) {
         
-        UIImage *image = task.result;
-        completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],nil);
+        if (task.result) {
+           
+            UIImage *image = task.result;
+            completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],nil);
+        }
+        
         return nil;
         
     }] continueWithBlock:^id(BFTask *task) {
@@ -137,13 +141,14 @@
 
 -(BFTask*)isValidURLString:(NSString*)urlString {
 
-    NSURLComponents *urlComponent = [NSURLComponents componentsWithString:urlString];
-    
-    if (urlString && urlString.length > 0 && urlComponent) {
+    if (urlString && urlString.length > 0) {
         
-        return [BFTask taskWithResult:urlString];
+        urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURLComponents *urlComponent = [NSURLComponents componentsWithString:urlString];
+        if (urlComponent) return [BFTask taskWithResult:urlString];
     }
-    else return [BFTask taskWithError:[NSError errorWithDomain:@"Missing url parameter" code:1 userInfo:nil]];
+    
+    return [BFTask taskWithError:[NSError errorWithDomain:@"Wrong url parameter" code:1 userInfo:nil]];
 }
 
 -(BFTask*)getImagePath:(NSString*)urlString {

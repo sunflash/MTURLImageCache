@@ -7,10 +7,11 @@
 //
 
 #import "LogoCollectionViewController.h"
+#import "ImageCollectionViewCell.h"
 #import "NetworkParameter.h"
 #import "NetworkTask.h"
-#import "ImageCollectionViewCell.h"
 #import "MTURLImageCache.h"
+#import "CSURITemplate.h"
 
 @interface LogoCollectionViewController ()
 
@@ -24,12 +25,10 @@
 
 #pragma mark - View
 
-static NSString * const reuseIdentifier = @"Cell";
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [[MTURLImageCache sharedMTURLImageCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
     
     [self getLogoData];
 }
@@ -49,7 +48,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LogoCell" forIndexPath:indexPath];
+    cell.imageView.image = nil;
     
     if (indexPath.row < self.logoURL.count) {
         
@@ -57,12 +57,12 @@ static NSString * const reuseIdentifier = @"Cell";
         
         [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *errorMessage) {
             
-            NSLog(@"%f %@",fetchTime,errorMessage);
-            
             if (success) {
                 
+                NSLog(@"FetchTime %f",fetchTime);
                 cell.imageView.image = image;
             }
+            else NSLog(@"Error %@",errorMessage);
         }];
     }
     
@@ -81,12 +81,20 @@ static NSString * const reuseIdentifier = @"Cell";
         
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             
-            [logosURLString addObject:obj[@"logourl"]];
+            [logosURLString addObject:[self getURL:obj[@"logourl"] parameters:@{}]];
         }];
         
         self.logoURL = [NSArray arrayWithArray:logosURLString];
         [self.collectionView reloadData];
     }];
+}
+
+-(NSString *)getURL:(NSString *)urlBaseString parameters:(NSDictionary *)parameters {
+    
+    CSURITemplate *template = [CSURITemplate URITemplateWithString:urlBaseString error:nil];
+    NSURL *url = [NSURL URLWithString:[template relativeStringWithVariables:parameters error:nil]];
+    
+    return url.absoluteString;
 }
 
 @end

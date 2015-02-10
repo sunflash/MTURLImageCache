@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		338F6AE81A8A910C00B4C18C /* CSURITemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 338F6AE71A8A910C00B4C18C /* CSURITemplate.m */; };
 		339CA2021A87FEBB009DF431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2001A87FEBB009DF431 /* Main.storyboard */; };
 		339CA2041A87FEBB009DF431 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2031A87FEBB009DF431 /* Images.xcassets */; };
 		339CA2071A87FEBB009DF431 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2051A87FEBB009DF431 /* LaunchScreen.xib */; };
@@ -50,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		338F6AE61A8A910C00B4C18C /* CSURITemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSURITemplate.h; sourceTree = "<group>"; };
+		338F6AE71A8A910C00B4C18C /* CSURITemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSURITemplate.m; sourceTree = "<group>"; };
 		339CA1F01A87FEBB009DF431 /* MTURLImageCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTURLImageCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339CA1F41A87FEBB009DF431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		339CA2011A87FEBB009DF431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +139,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		338F6AE51A8A910C00B4C18C /* CSURITemplate */ = {
+			isa = PBXGroup;
+			children = (
+				338F6AE61A8A910C00B4C18C /* CSURITemplate.h */,
+				338F6AE71A8A910C00B4C18C /* CSURITemplate.m */,
+			);
+			path = CSURITemplate;
+			sourceTree = "<group>";
+		};
 		339CA1E71A87FEBB009DF431 = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				339CA2DE1A88182C009DF431 /* Bolts */,
+				338F6AE51A8A910C00B4C18C /* CSURITemplate */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -420,6 +433,7 @@
 				339CA3001A88182C009DF431 /* BFAppLinkReturnToRefererView.m in Sources */,
 				339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */,
 				339CA2321A87FF31009DF431 /* main.m in Sources */,
+				338F6AE81A8A910C00B4C18C /* CSURITemplate.m in Sources */,
 				339CA3071A88182C009DF431 /* BFWebViewAppLinkResolver.m in Sources */,
 				339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */,
 				33ACE3A21A8A4640003AE463 /* LogoCollectionViewController.m in Sources */,
