@@ -16,6 +16,8 @@
 @interface LogoCollectionViewController ()
 
 @property (nonatomic, strong) NSArray *logoURL;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *emptyLogoItem;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *refreshLogoItem;
 
 @end
 
@@ -93,6 +95,16 @@
     NSURL *url = [NSURL URLWithString:[template relativeStringWithVariables:parameters error:nil]];
     
     return url.absoluteString;
+}
+
+-(IBAction)emptyLogos:(id)sender {
+
+    [[MTURLImageCache sharedMTURLImageCache] emptyCacheFolder];
+}
+
+-(IBAction)refreshLogos:(id)sender {
+
+    [self getLogoData];
 }
 
 @end

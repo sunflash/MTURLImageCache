@@ -55,19 +55,19 @@
             </objects>
             <point key="canvasLocation" x="474" y="449"/>
         </scene>
-        <!--Logo Collection View Controller-->
+        <!--Logo-->
         <scene sceneID="YUJ-Te-urL">
             <objects>
                 <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="H7T-lC-Jof" customClass="LogoCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="opV-DU-hUy">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="5Rp-HG-O3g">
                             <size key="itemSize" width="130" height="130"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
+                            <inset key="sectionInset" minX="20" minY="84" maxX="20" maxY="70"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LogoCell" id="Eo9-WB-bwi" customClass="ImageCollectionViewCell">
@@ -99,12 +99,26 @@
                             <outlet property="delegate" destination="H7T-lC-Jof" id="j5M-Fq-pY5"/>
                         </connections>
                     </collectionView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="EkJ-Jc-Jia"/>
+                    <navigationItem key="navigationItem" title="Logo" id="EkJ-Jc-Jia">
+                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="WIQ-O3-YqD">
+                            <connections>
+                                <action selector="emptyLogos:" destination="H7T-lC-Jof" id="Wnm-5g-t0f"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="dit-zB-NB7">
+                            <connections>
+                                <action selector="refreshLogos:" destination="H7T-lC-Jof" id="vJg-iQ-kJ5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="emptyLogoItem" destination="WIQ-O3-YqD" id="ozM-x7-Qhi"/>
+                        <outlet property="refreshLogoItem" destination="dit-zB-NB7" id="jY0-rM-y77"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1aG-Cq-QCP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1224" y="59"/>
+            <point key="canvasLocation" x="1238" y="-277"/>
         </scene>
     </scenes>
     <resources>
