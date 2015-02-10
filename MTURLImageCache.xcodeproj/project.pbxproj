@@ -35,6 +35,8 @@
 		33ACE3B41A8A4C97003AE463 /* ConnectionDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3AB1A8A4C97003AE463 /* ConnectionDetection.m */; };
 		33ACE3B51A8A4C97003AE463 /* Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3AD1A8A4C97003AE463 /* Network.m */; };
 		33ACE3B71A8A4C97003AE463 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3B31A8A4C97003AE463 /* Reachability.m */; };
+		33ACE3BB1A8A4F62003AE463 /* NetworkTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3BA1A8A4F62003AE463 /* NetworkTask.m */; };
+		33ACE3C11A8A5D17003AE463 /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3C01A8A5D17003AE463 /* ImageCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +112,10 @@
 		33ACE3B21A8A4C97003AE463 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		33ACE3B31A8A4C97003AE463 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		33ACE3B81A8A4D89003AE463 /* NetworkParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkParameter.h; sourceTree = "<group>"; };
+		33ACE3B91A8A4F62003AE463 /* NetworkTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkTask.h; sourceTree = "<group>"; };
+		33ACE3BA1A8A4F62003AE463 /* NetworkTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkTask.m; sourceTree = "<group>"; };
+		33ACE3BF1A8A5D17003AE463 /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+		33ACE3C01A8A5D17003AE463 /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +243,8 @@
 		339CA22C1A87FF31009DF431 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				33ACE3BF1A8A5D17003AE463 /* ImageCollectionViewCell.h */,
+				33ACE3C01A8A5D17003AE463 /* ImageCollectionViewCell.m */,
 				33ACE3A01A8A4640003AE463 /* LogoCollectionViewController.h */,
 				33ACE3A11A8A4640003AE463 /* LogoCollectionViewController.m */,
 			);
@@ -289,6 +297,8 @@
 				33ACE3AC1A8A4C97003AE463 /* Network.h */,
 				33ACE3AD1A8A4C97003AE463 /* Network.m */,
 				33ACE3B11A8A4C97003AE463 /* Reachability */,
+				33ACE3B91A8A4F62003AE463 /* NetworkTask.h */,
+				33ACE3BA1A8A4F62003AE463 /* NetworkTask.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -414,6 +424,7 @@
 				339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */,
 				33ACE3A21A8A4640003AE463 /* LogoCollectionViewController.m in Sources */,
 				339CA3061A88182C009DF431 /* BFURL.m in Sources */,
+				33ACE3BB1A8A4F62003AE463 /* NetworkTask.m in Sources */,
 				339CA2311A87FF31009DF431 /* AppDelegate.m in Sources */,
 				339CA2FF1A88182C009DF431 /* BFAppLinkReturnToRefererController.m in Sources */,
 				33ACE3A51A8A48B1003AE463 /* JSONHalFormatter.m in Sources */,
@@ -425,6 +436,7 @@
 				339CA30B1A882B95009DF431 /* ImageDecoder.m in Sources */,
 				339CA3041A88182C009DF431 /* BFTask.m in Sources */,
 				33ACE3B51A8A4C97003AE463 /* Network.m in Sources */,
+				33ACE3C11A8A5D17003AE463 /* ImageCollectionViewCell.m in Sources */,
 				339CA3031A88182C009DF431 /* BFMeasurementEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

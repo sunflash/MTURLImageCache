@@ -64,20 +64,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5Rp-HG-O3g">
-                            <size key="itemSize" width="150" height="150"/>
+                            <size key="itemSize" width="145" height="145"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Eo9-WB-bwi">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Eo9-WB-bwi" customClass="ImageCollectionViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oTi-ya-BAQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="oTi-ya-BAQ" secondAttribute="bottom" id="0QJ-dP-3q1"/>
+                                    <constraint firstItem="oTi-ya-BAQ" firstAttribute="top" secondItem="Eo9-WB-bwi" secondAttribute="top" id="5eU-sv-6AC"/>
+                                    <constraint firstItem="oTi-ya-BAQ" firstAttribute="leading" secondItem="Eo9-WB-bwi" secondAttribute="leading" id="7ty-Ej-5if"/>
+                                    <constraint firstAttribute="trailing" secondItem="oTi-ya-BAQ" secondAttribute="trailing" id="tcS-7R-3rJ"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="oTi-ya-BAQ" id="sII-zf-Nm8"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
