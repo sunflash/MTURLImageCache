@@ -273,6 +273,11 @@
     return isValidImage;
 }
 
++(NSString*)byteToString:(NSUInteger)byte {
+    
+    return [NSByteCountFormatter stringFromByteCount:byte countStyle:NSByteCountFormatterCountStyleFile];
+}
+
 //-------------------------------------------------------------------------------------------------------------
 
 #pragma mark - Disk clean
@@ -311,7 +316,12 @@
         
         //Perform your tasks that your application requires
         
-        [self cleanDiskWithCompletion:nil];
+        [self cleanDiskWithCompletion:^(NSDictionary *cleanStatInfo) {
+            
+#ifdef DEBUG
+            NSLog(@"%@",cleanStatInfo);
+#endif
+        }];
         
         [application endBackgroundTask: background_task]; //End the task so the system knows that you are done with what you need to perform
         background_task = UIBackgroundTaskInvalid; //Invalidate the background_task
@@ -406,9 +416,9 @@
     NSDictionary *cleanStatDict = @{@"BeforeFilesCount":@(beforeFileCount),
                                     @"CurretFilesCount":@(beforeFileCount-fileDeletedCount),
                                     @"FilesDeletedCount":@(fileDeletedCount),
-                                    @"BeforeCacheSize":@(beforeCacheSize/1024/1024),
-                                    @"CurrentCacheSize":@(currentCacheSize/1014/1024),
-                                    @"DeletedFilesSiz":@((beforeCacheSize-currentCacheSize)/1014/1024),
+                                    @"BeforeCacheSize":[MTURLImageCache byteToString:beforeCacheSize],
+                                    @"CurrentCacheSize":[MTURLImageCache byteToString:currentCacheSize],
+                                    @"DeletedFilesSiz":[MTURLImageCache byteToString:(beforeCacheSize-currentCacheSize)],
                                     @"CleanElapsedTime":@([MTURLImageCache elapsedTimeSinceDate:startDate])};
     
     completionBlock(cleanStatDict);
