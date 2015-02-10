@@ -243,8 +243,8 @@
         
         if (fileAge < self.expiredMaxAgeInSeconds) isImageExpired = NO;
     }
-    
-    return YES;
+     
+    return isImageExpired;
 }
 
 + (BOOL)isValidImage:(NSURLResponse *)response {
