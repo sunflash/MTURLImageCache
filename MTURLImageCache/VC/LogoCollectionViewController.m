@@ -55,14 +55,15 @@
         
         NSString *urlString = [self.logoURL objectAtIndex:indexPath.row];
         
-        [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *errorMessage) {
+        [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
             
             if (success) {
                 
                 NSLog(@"FetchTime %f",fetchTime);
                 cell.imageView.image = image;
             }
-            else NSLog(@"Error %@",errorMessage);
+            
+            NSLog(@"Info %@",infoMessage);
         }];
     }
     

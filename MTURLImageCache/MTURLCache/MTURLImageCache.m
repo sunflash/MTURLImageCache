@@ -98,7 +98,7 @@
             
             if (image) {
             
-                completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],nil);
+                completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Cached image");
                 isImageExpired = [self isImageExpired:filePath];
                 isCacheImageAvailable = YES;
             }
@@ -113,7 +113,7 @@
         if (task.result) {
            
             UIImage *image = task.result;
-            completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],nil);
+            completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Fresh image");
         }
         
         return nil;
