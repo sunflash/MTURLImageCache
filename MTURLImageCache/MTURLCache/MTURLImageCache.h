@@ -32,4 +32,8 @@ typedef void (^MTImageCacheCleanStat) (NSTimeInterval cleanTime);
 
 -(void)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler;
 
+-(void)removeCachedFileWithURL:(NSString*)urlString;
+-(void)emptyCacheFolder;
++(void)cleanDiskWithCompletion:()completionBlock;
+
 @end

@@ -272,11 +272,20 @@
 
 #pragma mark - Disk clean
 
--(void)removeCacheFileFromDisk:(NSString*)urlString {
+-(void)removeCachedFileWithURL:(NSString*)urlString {
     
-    
-    
+    if (urlString && urlString.length > 0) {
+        
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName,[CryptoHash md5:urlString]];
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL];
+        
+    }
+}
 
+-(void)emptyCacheFolder {
+
+    NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
+    [[NSFileManager defaultManager] removeItemAtPath:folderPath error:NULL];
 }
 
 
