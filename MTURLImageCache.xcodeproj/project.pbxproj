@@ -15,10 +15,7 @@
 		339CA2321A87FF31009DF431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA21F1A87FF31009DF431 /* main.m */; };
 		339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2221A87FF31009DF431 /* MTURLImageCache.m */; };
 		339CA2341A87FF31009DF431 /* AppDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2271A87FF31009DF431 /* AppDirectory.m */; };
-		339CA2351A87FF31009DF431 /* Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2291A87FF31009DF431 /* Configuration.m */; };
 		339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA22B1A87FF31009DF431 /* DeviceInfo.m */; };
-		339CA2371A87FF31009DF431 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA22E1A87FF31009DF431 /* FirstViewController.m */; };
-		339CA2381A87FF31009DF431 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2301A87FF31009DF431 /* SecondViewController.m */; };
 		339CA2FD1A88182C009DF431 /* BFAppLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2E01A88182C009DF431 /* BFAppLink.m */; };
 		339CA2FE1A88182C009DF431 /* BFAppLinkNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2E31A88182C009DF431 /* BFAppLinkNavigation.m */; };
 		339CA2FF1A88182C009DF431 /* BFAppLinkReturnToRefererController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2E61A88182C009DF431 /* BFAppLinkReturnToRefererController.m */; };
@@ -33,6 +30,11 @@
 		339CA3081A88182C009DF431 /* Bolts.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2FB1A88182C009DF431 /* Bolts.m */; };
 		339CA30B1A882B95009DF431 /* ImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA30A1A882B95009DF431 /* ImageDecoder.m */; };
 		339CA30E1A882BFF009DF431 /* CryptoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA30D1A882BFF009DF431 /* CryptoHash.m */; };
+		33ACE3A21A8A4640003AE463 /* LogoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3A11A8A4640003AE463 /* LogoCollectionViewController.m */; };
+		33ACE3A51A8A48B1003AE463 /* JSONHalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3A41A8A48B1003AE463 /* JSONHalFormatter.m */; };
+		33ACE3B41A8A4C97003AE463 /* ConnectionDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3AB1A8A4C97003AE463 /* ConnectionDetection.m */; };
+		33ACE3B51A8A4C97003AE463 /* Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3AD1A8A4C97003AE463 /* Network.m */; };
+		33ACE3B71A8A4C97003AE463 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3B31A8A4C97003AE463 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,14 +63,8 @@
 		339CA2221A87FF31009DF431 /* MTURLImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTURLImageCache.m; sourceTree = "<group>"; };
 		339CA2261A87FF31009DF431 /* AppDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDirectory.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		339CA2271A87FF31009DF431 /* AppDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDirectory.m; sourceTree = "<group>"; };
-		339CA2281A87FF31009DF431 /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configuration.h; sourceTree = "<group>"; };
-		339CA2291A87FF31009DF431 /* Configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Configuration.m; sourceTree = "<group>"; };
 		339CA22A1A87FF31009DF431 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
 		339CA22B1A87FF31009DF431 /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
-		339CA22D1A87FF31009DF431 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FirstViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		339CA22E1A87FF31009DF431 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		339CA22F1A87FF31009DF431 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SecondViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		339CA2301A87FF31009DF431 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		339CA2DF1A88182C009DF431 /* BFAppLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BFAppLink.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		339CA2E01A88182C009DF431 /* BFAppLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAppLink.m; sourceTree = "<group>"; };
 		339CA2E11A88182C009DF431 /* BFAppLink_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAppLink_Internal.h; sourceTree = "<group>"; };
@@ -103,6 +99,17 @@
 		339CA30A1A882B95009DF431 /* ImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDecoder.m; sourceTree = "<group>"; };
 		339CA30C1A882BFF009DF431 /* CryptoHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoHash.h; sourceTree = "<group>"; };
 		339CA30D1A882BFF009DF431 /* CryptoHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoHash.m; sourceTree = "<group>"; };
+		33ACE3A01A8A4640003AE463 /* LogoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoCollectionViewController.h; sourceTree = "<group>"; };
+		33ACE3A11A8A4640003AE463 /* LogoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoCollectionViewController.m; sourceTree = "<group>"; };
+		33ACE3A31A8A48B1003AE463 /* JSONHalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONHalFormatter.h; sourceTree = "<group>"; };
+		33ACE3A41A8A48B1003AE463 /* JSONHalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONHalFormatter.m; sourceTree = "<group>"; };
+		33ACE3AA1A8A4C97003AE463 /* ConnectionDetection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDetection.h; sourceTree = "<group>"; };
+		33ACE3AB1A8A4C97003AE463 /* ConnectionDetection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetection.m; sourceTree = "<group>"; };
+		33ACE3AC1A8A4C97003AE463 /* Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Network.h; sourceTree = "<group>"; };
+		33ACE3AD1A8A4C97003AE463 /* Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Network.m; sourceTree = "<group>"; };
+		33ACE3B21A8A4C97003AE463 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		33ACE3B31A8A4C97003AE463 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		33ACE3B81A8A4D89003AE463 /* NetworkParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkParameter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +151,7 @@
 		339CA1F21A87FEBB009DF431 /* MTURLImageCache */ = {
 			isa = PBXGroup;
 			children = (
+				33ACE3A91A8A4C97003AE463 /* Network */,
 				339CA2251A87FF31009DF431 /* Utilites */,
 				339CA22C1A87FF31009DF431 /* VC */,
 				339CA2201A87FF31009DF431 /* MTURLCache */,
@@ -218,10 +226,10 @@
 			children = (
 				339CA2261A87FF31009DF431 /* AppDirectory.h */,
 				339CA2271A87FF31009DF431 /* AppDirectory.m */,
-				339CA2281A87FF31009DF431 /* Configuration.h */,
-				339CA2291A87FF31009DF431 /* Configuration.m */,
 				339CA22A1A87FF31009DF431 /* DeviceInfo.h */,
 				339CA22B1A87FF31009DF431 /* DeviceInfo.m */,
+				33ACE3A31A8A48B1003AE463 /* JSONHalFormatter.h */,
+				33ACE3A41A8A48B1003AE463 /* JSONHalFormatter.m */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -229,10 +237,8 @@
 		339CA22C1A87FF31009DF431 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				339CA22D1A87FF31009DF431 /* FirstViewController.h */,
-				339CA22E1A87FF31009DF431 /* FirstViewController.m */,
-				339CA22F1A87FF31009DF431 /* SecondViewController.h */,
-				339CA2301A87FF31009DF431 /* SecondViewController.m */,
+				33ACE3A01A8A4640003AE463 /* LogoCollectionViewController.h */,
+				33ACE3A11A8A4640003AE463 /* LogoCollectionViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -272,6 +278,28 @@
 				339CA2FC1A88182C009DF431 /* BoltsVersion.h */,
 			);
 			path = Bolts;
+			sourceTree = "<group>";
+		};
+		33ACE3A91A8A4C97003AE463 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				33ACE3B81A8A4D89003AE463 /* NetworkParameter.h */,
+				33ACE3AA1A8A4C97003AE463 /* ConnectionDetection.h */,
+				33ACE3AB1A8A4C97003AE463 /* ConnectionDetection.m */,
+				33ACE3AC1A8A4C97003AE463 /* Network.h */,
+				33ACE3AD1A8A4C97003AE463 /* Network.m */,
+				33ACE3B11A8A4C97003AE463 /* Reachability */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		33ACE3B11A8A4C97003AE463 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				33ACE3B21A8A4C97003AE463 /* Reachability.h */,
+				33ACE3B31A8A4C97003AE463 /* Reachability.m */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -374,27 +402,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33ACE3B71A8A4C97003AE463 /* Reachability.m in Sources */,
 				339CA30E1A882BFF009DF431 /* CryptoHash.m in Sources */,
-				339CA2351A87FF31009DF431 /* Configuration.m in Sources */,
 				339CA3011A88182C009DF431 /* BFAppLinkTarget.m in Sources */,
 				339CA3081A88182C009DF431 /* Bolts.m in Sources */,
 				339CA3021A88182C009DF431 /* BFExecutor.m in Sources */,
 				339CA3001A88182C009DF431 /* BFAppLinkReturnToRefererView.m in Sources */,
 				339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */,
-				339CA2371A87FF31009DF431 /* FirstViewController.m in Sources */,
 				339CA2321A87FF31009DF431 /* main.m in Sources */,
-				339CA2381A87FF31009DF431 /* SecondViewController.m in Sources */,
 				339CA3071A88182C009DF431 /* BFWebViewAppLinkResolver.m in Sources */,
 				339CA2361A87FF31009DF431 /* DeviceInfo.m in Sources */,
+				33ACE3A21A8A4640003AE463 /* LogoCollectionViewController.m in Sources */,
 				339CA3061A88182C009DF431 /* BFURL.m in Sources */,
 				339CA2311A87FF31009DF431 /* AppDelegate.m in Sources */,
 				339CA2FF1A88182C009DF431 /* BFAppLinkReturnToRefererController.m in Sources */,
+				33ACE3A51A8A48B1003AE463 /* JSONHalFormatter.m in Sources */,
 				339CA3051A88182C009DF431 /* BFTaskCompletionSource.m in Sources */,
 				339CA2FE1A88182C009DF431 /* BFAppLinkNavigation.m in Sources */,
+				33ACE3B41A8A4C97003AE463 /* ConnectionDetection.m in Sources */,
 				339CA2FD1A88182C009DF431 /* BFAppLink.m in Sources */,
 				339CA2341A87FF31009DF431 /* AppDirectory.m in Sources */,
 				339CA30B1A882B95009DF431 /* ImageDecoder.m in Sources */,
 				339CA3041A88182C009DF431 /* BFTask.m in Sources */,
+				33ACE3B51A8A4C97003AE463 /* Network.m in Sources */,
 				339CA3031A88182C009DF431 /* BFMeasurementEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
