@@ -70,7 +70,7 @@
 
 //-------------------------------------------------------------------------------------------------------------
 
-#pragma mark - Fuction
+#pragma mark - Function
 
 -(void)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler {
     

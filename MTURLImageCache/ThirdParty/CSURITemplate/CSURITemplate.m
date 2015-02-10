@@ -853,7 +853,7 @@ NSString *const CSURITemplateErrorScanLocationErrorKey = @"location";
         // Varspec contains a forbidden character.
         NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"The template contains an invalid variable key.", nil),
                                     NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"A variable key containing the forbidden character '$' was encountered.", nil) };
-        *error = [NSError errorWithDomain:CSURITemplateErrorDomain code:CSURITemplateErrorInvalidVariableKey userInfo:userInfo];
+        if (error != NULL) *error = [NSError errorWithDomain:CSURITemplateErrorDomain code:CSURITemplateErrorInvalidVariableKey userInfo:userInfo];
         return nil;
     }
     NSMutableCharacterSet *varchars = [NSMutableCharacterSet alphanumericCharacterSet];
@@ -961,7 +961,7 @@ NSString *const CSURITemplateErrorScanLocationErrorKey = @"location";
         NSString *failureReason = [NSString stringWithFormat:NSLocalizedString(@"An operator was encountered with a length greater than 1 character ('%@').", nil), operator];
         NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"An invalid operator was encountered.", nil),
                                     NSLocalizedFailureReasonErrorKey : failureReason };
-        *error = [NSError errorWithDomain:CSURITemplateErrorDomain code:CSURITemplateErrorInvalidOperator userInfo:userInfo];
+        if (error != NULL) *error = [NSError errorWithDomain:CSURITemplateErrorDomain code:CSURITemplateErrorInvalidOperator userInfo:userInfo];
         return nil;
     }
     
@@ -992,7 +992,7 @@ NSString *const CSURITemplateErrorScanLocationErrorKey = @"location";
         NSString *failureReason = [NSString stringWithFormat:NSLocalizedString(@"The URI template specification does not include an operator for the character '%@'.", nil), operator];
         NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"An unknown operator was encountered.", nil),
                                     NSLocalizedFailureReasonErrorKey : failureReason };
-        *error = [NSError errorWithDomain:CSURITemplateErrorDomain code:CSURITemplateErrorUnknownOperator userInfo:userInfo];
+        if (error != NULL) *error = [NSError errorWithDomain:CSURITemplateErrorDomain code:CSURITemplateErrorUnknownOperator userInfo:userInfo];
         return nil;
     }
 }
