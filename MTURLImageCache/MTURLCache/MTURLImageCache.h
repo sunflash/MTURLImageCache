@@ -16,7 +16,7 @@
 #define defaultExpiredMaxAgeInSeconds    86400
 
 typedef void (^MTImageCacheResponse)(BOOL success,UIImage *image, NSTimeInterval fetchTime, NSString *errorMessage);
-typedef void (^MTImageCacheCleanStat) (NSTimeInterval cleanTime);
+typedef void (^MTImageCacheCleanStat) (NSDictionary *cleanStatInfo);
 
 @interface MTURLImageCache : NSObject
 
@@ -34,6 +34,6 @@ typedef void (^MTImageCacheCleanStat) (NSTimeInterval cleanTime);
 
 -(void)removeCachedFileWithURL:(NSString*)urlString;
 -(void)emptyCacheFolder;
-+(void)cleanDiskWithCompletion:()completionBlock;
++(void)cleanDiskWithCompletion:(MTImageCacheCleanStat)completionBlock;
 
 @end

@@ -283,16 +283,94 @@
 }
 
 -(void)emptyCacheFolder {
-
-    NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
-    [[NSFileManager defaultManager] removeItemAtPath:folderPath error:NULL];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    
+        NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
+        [[NSFileManager defaultManager] removeItemAtPath:folderPath error:NULL];
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:NULL];
+    });
 }
 
-
-+(void)cleanDiskWithCompletion:()completionBlock {
-
++ (void)backgroundCleanDisk {
     
+    UIApplication *application = [UIApplication sharedApplication]; //Get the shared application instance
+    __block UIBackgroundTaskIdentifier background_task = [application beginBackgroundTaskWithExpirationHandler: ^ {
+        [application endBackgroundTask: background_task]; //Tell the system that we are done with the tasks
+        background_task = UIBackgroundTaskInvalid; //Set the task to be invalid
+        //System will be shutting down the app at any point in time now
+    }];
+    
+    //Background tasks require you to use asyncrous tasks
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //Perform your tasks that your application requires
+        
+        [self cleanDiskWithCompletion:nil];
+        
+        [application endBackgroundTask: background_task]; //End the task so the system knows that you are done with what you need to perform
+        background_task = UIBackgroundTaskInvalid; //Invalidate the background_task
+    });
+}
 
++(void)cleanDiskWithCompletion:(MTImageCacheCleanStat)completionBlock {
+    
+    NSString *cacheRootFolder = [[AppDirectory applicationCachePath] stringByAppendingPathComponent:defulatCacheRootFolderName];
+    NSArray *resourceKeys     = @[NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey];
+    
+    NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL URLWithString:cacheRootFolder]
+                                                                 includingPropertiesForKeys:resourceKeys
+                                                                                    options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                                               errorHandler:NULL];
+    NSMutableDictionary *cacheFiles       = [NSMutableDictionary new];
+    NSMutableArray *fileURLToDelete       = [NSMutableArray new];
+    NSTimeInterval cacheContentMaxAge     = (60*60*24)*defaultMaxCachePeriodInDays;
+    NSUInteger maxCacheSize               = (1024*1024)*defaultGlobalDiskCapacityMB;
+    __block NSUInteger cacheSize          = 0;
+    
+    for (NSURL *fileURL in fileEnumerator) {
+        
+        NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
+        
+        if ([resourceValues[NSURLIsDirectoryKey] boolValue] == YES) continue;
+        
+        NSDate *fileModificationDate  = resourceValues[NSURLContentModificationDateKey];
+        NSTimeInterval fileAge = -[fileModificationDate timeIntervalSinceNow];
+        
+        if (fileAge > cacheContentMaxAge) [fileURLToDelete addObject:fileURL];
+        else {
+        
+            NSNumber *fileAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey];
+            cacheSize += [fileAllocatedSize unsignedIntegerValue];
+            cacheFiles[fileURL] = resourceValues;
+        }
+    }
+    
+    [fileURLToDelete enumerateObjectsUsingBlock:^(NSURL *fileURL, NSUInteger idx, BOOL *stop) {
+        [[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL];
+    }];
+    
+    if (maxCacheSize > 0 && cacheSize > maxCacheSize) {
+        
+        const NSUInteger desireCacheSize = maxCacheSize*0.5;
+        
+        NSArray *sortFilesByModificationDate = [cacheFiles keysSortedByValueWithOptions:NSSortConcurrent
+                                                                        usingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                                                            return [obj1[NSURLContentModificationDateKey] compare:obj2[NSURLContentModificationDateKey]];
+                                                                        }];
+        
+        [sortFilesByModificationDate enumerateObjectsUsingBlock:^(NSURL *fileURL, NSUInteger idx, BOOL *stop) {
+            
+            if ([[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL]) {
+             
+                NSDictionary *resoruceValues = cacheFiles[fileURL];
+                NSNumber *fileAllocatedSize = resoruceValues[NSURLTotalFileAllocatedSizeKey];
+                cacheSize -= [fileAllocatedSize unsignedIntegerValue];
+                
+                if (cacheSize < desireCacheSize) *stop = YES;
+            }
+        }];
+    }
 }
 
 
