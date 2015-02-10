@@ -292,7 +292,7 @@
     });
 }
 
-+ (void)backgroundCleanDisk {
++(void)backgroundCleanDisk {
     
     UIApplication *application = [UIApplication sharedApplication]; //Get the shared application instance
     __block UIBackgroundTaskIdentifier background_task = [application beginBackgroundTaskWithExpirationHandler: ^ {
@@ -310,6 +310,20 @@
         
         [application endBackgroundTask: background_task]; //End the task so the system knows that you are done with what you need to perform
         background_task = UIBackgroundTaskInvalid; //Invalidate the background_task
+    });
+}
+
++(void)cleanDiskWithCompletionAsync:(MTImageCacheCleanStat)completionBlock {
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        [MTURLImageCache cleanDiskWithCompletionAsync:^(NSDictionary *cleanStatInfo) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                completionBlock(cleanStatInfo);
+            });
+        }];
     });
 }
 

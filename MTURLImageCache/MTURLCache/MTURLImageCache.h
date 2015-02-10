@@ -34,6 +34,9 @@ typedef void (^MTImageCacheCleanStat) (NSDictionary *cleanStatInfo);
 
 -(void)removeCachedFileWithURL:(NSString*)urlString;
 -(void)emptyCacheFolder;
+
++(void)backgroundCleanDisk;
 +(void)cleanDiskWithCompletion:(MTImageCacheCleanStat)completionBlock;
++(void)cleanDiskWithCompletionAsync:(MTImageCacheCleanStat)completionBlock;
 
 @end
