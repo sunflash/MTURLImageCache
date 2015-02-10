@@ -98,7 +98,7 @@
             
             if (image) {
             
-                completionHandler(YES,image,[self elapsedTimeSinceDate:start],nil);
+                completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],nil);
                 isImageExpired = [self isImageExpired:filePath];
                 isCacheImageAvailable = YES;
             }
@@ -111,7 +111,7 @@
     }] continueWithExecutor:mainQueue withSuccessBlock:^id(BFTask *task) {
         
         UIImage *image = task.result;
-        completionHandler(YES,image,[self elapsedTimeSinceDate:start],nil);
+        completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],nil);
         return nil;
         
     }] continueWithBlock:^id(BFTask *task) {
@@ -212,7 +212,7 @@
 
 #pragma mark - Utilites
 
--(NSTimeInterval)elapsedTimeSinceDate:(NSDate*)date {
++(NSTimeInterval)elapsedTimeSinceDate:(NSDate*)date {
 
     return [[NSDate date] timeIntervalSinceDate:date];
 }
@@ -315,6 +315,12 @@
 
 +(void)cleanDiskWithCompletion:(MTImageCacheCleanStat)completionBlock {
     
+    NSUInteger beforeFileCount = 0;
+    NSUInteger beforeCacheSize = 0;
+    __block NSUInteger fileDeletedCount = 0;
+    
+    NSDate *startDate = [NSDate date];
+    
     NSString *cacheRootFolder = [[AppDirectory applicationCachePath] stringByAppendingPathComponent:defulatCacheRootFolderName];
     NSArray *resourceKeys     = @[NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey];
     
@@ -326,7 +332,7 @@
     NSMutableArray *fileURLToDelete       = [NSMutableArray new];
     NSTimeInterval cacheContentMaxAge     = (60*60*24)*defaultMaxCachePeriodInDays;
     NSUInteger maxCacheSize               = (1024*1024)*defaultGlobalDiskCapacityMB;
-    __block NSUInteger cacheSize          = 0;
+    __block NSUInteger currentCacheSize   = 0;
     
     for (NSURL *fileURL in fileEnumerator) {
         
@@ -334,23 +340,27 @@
         
         if ([resourceValues[NSURLIsDirectoryKey] boolValue] == YES) continue;
         
+        NSNumber *fileAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey];
+        
+        beforeFileCount++;
+        beforeCacheSize += [fileAllocatedSize unsignedIntegerValue];
+        
         NSDate *fileModificationDate  = resourceValues[NSURLContentModificationDateKey];
         NSTimeInterval fileAge = -[fileModificationDate timeIntervalSinceNow];
         
         if (fileAge > cacheContentMaxAge) [fileURLToDelete addObject:fileURL];
         else {
-        
-            NSNumber *fileAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey];
-            cacheSize += [fileAllocatedSize unsignedIntegerValue];
+            currentCacheSize += [fileAllocatedSize unsignedIntegerValue];
             cacheFiles[fileURL] = resourceValues;
         }
     }
     
     [fileURLToDelete enumerateObjectsUsingBlock:^(NSURL *fileURL, NSUInteger idx, BOOL *stop) {
+        fileDeletedCount++;
         [[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL];
     }];
     
-    if (maxCacheSize > 0 && cacheSize > maxCacheSize) {
+    if (maxCacheSize > 0 && currentCacheSize > maxCacheSize) {
         
         const NSUInteger desireCacheSize = maxCacheSize*0.5;
         
@@ -362,15 +372,27 @@
         [sortFilesByModificationDate enumerateObjectsUsingBlock:^(NSURL *fileURL, NSUInteger idx, BOOL *stop) {
             
             if ([[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL]) {
+                
+                fileDeletedCount++;
              
                 NSDictionary *resoruceValues = cacheFiles[fileURL];
                 NSNumber *fileAllocatedSize = resoruceValues[NSURLTotalFileAllocatedSizeKey];
-                cacheSize -= [fileAllocatedSize unsignedIntegerValue];
+                currentCacheSize -= [fileAllocatedSize unsignedIntegerValue];
                 
-                if (cacheSize < desireCacheSize) *stop = YES;
+                if (currentCacheSize < desireCacheSize) *stop = YES;
             }
         }];
     }
+    
+    NSDictionary *cleanStatDict = @{@"BeforeFilesCount":@(beforeFileCount),
+                                    @"CurretFilesCount":@(beforeFileCount-fileDeletedCount),
+                                    @"FilesDeletedCount":@(fileDeletedCount),
+                                    @"BeforeCacheSize":@(beforeCacheSize/1024/1024),
+                                    @"CurrentCacheSize":@(currentCacheSize/1014/1024),
+                                    @"DeletedFilesSiz":@((beforeCacheSize-currentCacheSize)/1014/1024),
+                                    @"CleanElapsedTime":@([MTURLImageCache elapsedTimeSinceDate:startDate])};
+    
+    completionBlock(cleanStatDict);
 }
 
 
