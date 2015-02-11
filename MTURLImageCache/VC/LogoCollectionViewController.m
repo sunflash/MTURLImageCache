@@ -78,10 +78,12 @@
     [NetworkTask getDataWithBaseURL:BackendURL path:@"customers" completion:^(BOOL success, NSArray *data) {
 
         NSMutableArray *logosURLString = [NSMutableArray new];
+        float scale = [UIScreen mainScreen].scale;
+        __block NSDictionary *parameters = (scale > 1.1) ? @{} : @{@"w":@130,@"h":@130};
         
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             
-            [logosURLString addObject:[self getURL:obj[@"logourl"] parameters:@{}]];
+            [logosURLString addObject:[self getURL:obj[@"logourl"] parameters:parameters]];
         }];
         
         self.logoURL = [NSArray arrayWithArray:logosURLString];
