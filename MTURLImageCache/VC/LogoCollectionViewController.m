@@ -76,6 +76,8 @@
 -(void)getLogoData {
 
     [NetworkTask getDataWithBaseURL:BackendURL path:@"customers" completion:^(BOOL success, NSArray *data) {
+        
+        data = [data sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 
         NSMutableArray *logosURLString = [NSMutableArray new];
         float scale = [UIScreen mainScreen].scale;
