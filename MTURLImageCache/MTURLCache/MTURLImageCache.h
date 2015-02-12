@@ -9,6 +9,15 @@
 @import Foundation;
 @import UIKit;
 
+@interface URLCacheCancellationToken : NSObject
+
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic) BOOL isCancelled;
+
+-(void)cancel;
+
+@end
+
 #define defulatCacheRootFolderName       @"MTUCF"
 #define defaultMaxCachePeriodInDays      21
 #define defaultGlobalDiskCapacityMB      100
@@ -30,7 +39,7 @@ typedef void (^MTImageCacheCleanStat) (NSDictionary *cleanStatInfo);
 
 + (id)sharedMTURLImageCache;
 
--(void)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler;
+-(URLCacheCancellationToken*)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler;
 
 -(void)removeCachedFileWithURL:(NSString*)urlString;
 -(void)emptyCacheFolder;

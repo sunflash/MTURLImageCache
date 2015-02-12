@@ -57,13 +57,16 @@
         
         NSString *urlString = [self.logoURL objectAtIndex:indexPath.row];
         
-        [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+        URLCacheCancellationToken *cancellationToken = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString
+                                                        completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
             
             if (success) cell.imageView.image = image;
             
             if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
             else         NSLog(@"%@",infoMessage);
         }];
+        
+        [cancellationToken cancel];
     }
     
     return cell;

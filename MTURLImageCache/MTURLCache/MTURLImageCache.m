@@ -11,7 +11,6 @@
 #import "AppDirectory.h"
 #import "CryptoHash.h"
 #import "ImageDecoder.h"
-#import "Bolts.h"
 
 @interface MTURLImageCache ()
 
@@ -72,145 +71,222 @@
 
 #pragma mark - Function
 
--(void)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler {
+-(URLCacheCancellationToken*)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler {
     
     NSDate *start = [NSDate date];
+    BOOL anyError = NO;
+
+    //===============================
+    // Step 1 - Check URL String
     
-    BFExecutor *mainQueue = [BFExecutor executorWithBlock:^void(void(^block)()) {
-        dispatch_async(dispatch_get_main_queue(), block);
-    }];
+    anyError = ![self isValidURLString:urlString];
     
-    [[[[[self isValidURLString:urlString] continueWithSuccessBlock:^id(BFTask *task) {
-     
-        return [self getImagePath:urlString];
+    if (anyError) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Wrong url parameter");
+    
+    //===============================
+    // Step 2 - Return cache image
+    
+    BOOL isImageExpired = YES;
+    BOOL isCacheImageUsed = NO;
+    NSString *filePath = nil;
+    
+    if (!anyError) {
         
-    }] continueWithSuccessBlock:^id(BFTask *task) {
-        
-        NSString *filePath = task.result;
-        BOOL isImageExpired = YES;
-        BOOL isCacheImageAvailable = NO;
-        
+        filePath = [self getImagePath:urlString];
         NSError *error;
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
             
-            UIImage *image =  [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+            UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
             
             if (image) {
-            
+                
                 completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Cached image");
                 isImageExpired = [self isImageExpired:filePath];
-                isCacheImageAvailable = YES;
+                isCacheImageUsed = YES;
             }
             else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
         }
+    }
+    
+    //===============================
+    // Step 3 - Fetch new image
+    
+    URLCacheCancellationToken *cancellationToken = [URLCacheCancellationToken new];
+    
+    if (!anyError && (!isCacheImageUsed || isImageExpired)) {
         
-        if (isImageExpired == YES) return [self fetchImage:@{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageAvailable)}];
-        else                       return nil;
+        NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageUsed)};
         
-    }] continueWithExecutor:mainQueue withSuccessBlock:^id(BFTask *task) {
-        
-        if (task.result) {
-           
-            UIImage *image = task.result;
-            completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Fresh image");
-        }
-        
-        return nil;
-        
-    }] continueWithBlock:^id(BFTask *task) {
-        
-        if (task.error) {
+        [self fetchImage:imageInfo cancellationToken:cancellationToken completion:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
             
-            BOOL isCacheImageUsed = NO;
-            if (task.error.userInfo) isCacheImageUsed = [task.error.userInfo[@"isCacheImageUsed"] boolValue];
-            
-            if (!isCacheImageUsed) {
-                
-                NSString *errorMessage = task.error.domain;
-                completionHandler (NO,nil,0,errorMessage);
-            }
-        }
-        return nil;
-    }];
+            completionHandler(success,image,[MTURLImageCache elapsedTimeSinceDate:start],infoMessage);
+        }];
+    }
+    
+    return cancellationToken;
 }
 
 //-------------------------------------------------------------------------------------------------------------
 
 #pragma mark - SubTasks
 
--(BFTask*)isValidURLString:(NSString*)urlString {
+-(BOOL)isValidURLString:(NSString*)urlString {
 
     if (urlString && urlString.length > 0) {
         
         urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSURLComponents *urlComponent = [NSURLComponents componentsWithString:urlString];
-        if (urlComponent) return [BFTask taskWithResult:urlString];
+        if (urlComponent) return YES;
     }
     
-    return [BFTask taskWithError:[NSError errorWithDomain:@"Wrong url parameter" code:1 userInfo:nil]];
+    return NO;
 }
 
--(BFTask*)getImagePath:(NSString*)urlString {
+-(NSString*)getImagePath:(NSString*)urlString {
     
     NSString *filePath = [NSString stringWithFormat:@"%@/%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName,[CryptoHash md5:urlString]];
-    return [BFTask taskWithResult:filePath];
+    return filePath;
 }
 
--(BFTask*)fetchImage:(NSDictionary*)imageInfo {
-
-    if (imageInfo) {
+-(NSURLSessionDownloadTask*)fetchImage:(NSDictionary*)imageInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTImageCacheResponse)completionHandler {
+    
+    BOOL anyError = NO;
+    NSDate *start = [NSDate date];
+    
+    //===============================
+    
+    if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+    
+    if (!imageInfo) {
+        anyError = YES;
+        completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"No image info");
+    }
+    
+    //===============================
+    
+    if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+    
+    BOOL isCacheImageUsed = NO;
+    NSString *urlString = nil;
+    NSString *filePath = nil;
+    
+    if (!anyError) {
         
-        NSString *urlString = imageInfo[@"url"];
-        NSString *filePath = imageInfo[@"filePath"];
+        urlString = imageInfo[@"url"];
+        filePath = imageInfo[@"filePath"];
+        isCacheImageUsed = (imageInfo[@"isCacheImageUsed"]) ? [imageInfo[@"isCacheImageUsed"] boolValue] : isCacheImageUsed;
         
-        if (!urlString || !filePath) return [BFTask taskWithError:[NSError errorWithDomain:@"No image info" code:2 userInfo:imageInfo]];
+        if (!urlString || !filePath) {
+            anyError = YES;
+            if (!isCacheImageUsed) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Not valid image info");
+        }
+    }
+    
+    //===============================
+    
+    if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+    
+    if (!anyError) {
         
         NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
         BOOL isFolderExist = [self createFolderIfNotExist:folderPath];
         
-        if (!isFolderExist) return [BFTask taskWithError:[NSError errorWithDomain:@"Create folder failed" code:3 userInfo:imageInfo]];
-        else {
-            
-            BFTaskCompletionSource *downloadTask = [BFTaskCompletionSource taskCompletionSource];
-            
-            [[[self urlSession] downloadTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-               
-                if (error || [MTURLImageCache isValidImage:response] == NO) {
-                    
-                    [downloadTask setError:[NSError errorWithDomain:@"File download failed" code:4 userInfo:imageInfo]];
-                }
-                else {
-                
-                    NSFileManager *fileManager = [NSFileManager defaultManager];
-                    [fileManager removeItemAtPath:filePath error:NULL];
-                    BOOL success = [fileManager copyItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&error];
-                
-                    if (error || success == NO) {
-                        
-                        [downloadTask setError:[NSError errorWithDomain:@"File copy failed" code:5 userInfo:imageInfo]];
-                    }
-                    else {
-                    
-                        if (!error && success) {
-                            
-                            UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-                            if (image) [downloadTask setResult:image];
-                            else {
-                                
-                                [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-                                [downloadTask setError:[NSError errorWithDomain:@"File is not image" code:6 userInfo:imageInfo]];
-                            }
-                        }
-                    }
-                }
-                
-            }] resume];
-            
-            return downloadTask.task;
+        if (isFolderExist == NO) {
+            anyError = YES;
+            if (!isCacheImageUsed) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Create folder failed");
         }
     }
-    else return [BFTask taskWithError:[NSError errorWithDomain:@"No image info" code:2 userInfo:imageInfo]];
+    
+    //===============================
+    
+    if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+    
+    NSURLSessionDownloadTask *imageDownloadTask = nil;
+    
+    if (!anyError) {
+        
+        imageDownloadTask = [[self urlSession] downloadTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            
+            BOOL anyError =  NO;
+            
+            //===============================
+            
+            if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+            
+            if (error || [MTURLImageCache isValidImage:response] == NO) {
+                anyError = YES;
+                
+                if (!isCacheImageUsed) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File download failed");
+                    });
+                }
+            }
+            
+            //===============================
+            
+            if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+            
+            if (!anyError) {
+                
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                [fileManager removeItemAtPath:filePath error:NULL];
+                BOOL copyDownloadedImageSuccess = [fileManager copyItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&error];
+                
+                if (error || copyDownloadedImageSuccess == NO) {
+                    anyError = YES;
+                    
+                    if (!isCacheImageUsed) {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File copy failed");
+                        });
+                    }
+                }
+            }
+            
+            //===============================
+            
+            if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+            
+            UIImage *image = nil;
+            
+            if (!anyError) {
+                
+                image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+                
+                if (!image) {
+                    anyError = YES;
+                    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                    
+                    if (!isCacheImageUsed) {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File is not image");
+                        });
+                    }
+                }
+            }
+            
+            //===============================
+            
+            if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
+            
+            if (!anyError && image) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Fresh image");
+                });
+            }
+        }];
+        
+        [imageDownloadTask resume];
+    }
+    
+    return imageDownloadTask;
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -424,5 +500,32 @@
     completionBlock(cleanStatDict);
 }
 
+@end
+
+//-------------------------------------------------------------------------------------------------------------
+
+#pragma mark - CancellationToken
+
+@implementation URLCacheCancellationToken
+
+-(id)init {
+    
+    if (self = [super init]) {
+        
+        self.isCancelled = NO;
+    }
+    return self;
+}
+
+-(void)cancel {
+    
+    if (self.downloadTask) {
+        
+        [self.downloadTask cancelByProducingResumeData:NULL];
+        self.downloadTask = nil;
+    }
+    
+    self.isCancelled = YES;
+}
 
 @end
