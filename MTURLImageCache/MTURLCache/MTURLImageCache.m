@@ -127,6 +127,49 @@
     return cancellationToken;
 }
 
+-(UIImage*)getImageFromURL:(NSString*)urlString {
+    
+    UIImage *image = nil;
+    
+    //===============================
+    // Step 1 - Check URL String
+    
+    BOOL isValidString = [self isValidURLString:urlString];
+    if (!isValidString) return nil;
+    
+    //===============================
+    // Step 2 - Return cache image
+    
+    NSString *filePath = [self getImagePath:urlString];
+    BOOL isImageExpired = YES;
+    BOOL isCacheImageUsed = NO;
+    
+    NSError *error;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        
+        image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+        
+        if (image) {
+            
+            isImageExpired = [self isImageExpired:filePath];
+            isCacheImageUsed = YES;
+        }
+        else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    }
+    
+    //===============================
+    // Step 3 - Fetch new image
+    
+    if (!isCacheImageUsed || isImageExpired) {
+        
+        NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageUsed)};
+        [self fetchImage:imageInfo cancellationToken:nil completion:NULL];
+    }
+    
+    return image;
+}
+
 //-------------------------------------------------------------------------------------------------------------
 
 #pragma mark - SubTasks
@@ -160,7 +203,7 @@
     
     if (!imageInfo) {
         anyError = YES;
-        completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"No image info");
+        if (completionHandler) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"No image info");
     }
     
     //===============================
@@ -179,7 +222,7 @@
         
         if (!urlString || !filePath) {
             anyError = YES;
-            if (!isCacheImageUsed) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Not valid image info");
+            if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Not valid image info");
         }
     }
     
@@ -194,7 +237,7 @@
         
         if (isFolderExist == NO) {
             anyError = YES;
-            if (!isCacheImageUsed) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Create folder failed");
+            if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Create folder failed");
         }
     }
     
@@ -217,7 +260,7 @@
             if (error || [MTURLImageCache isValidImage:response] == NO) {
                 anyError = YES;
                 
-                if (!isCacheImageUsed) {
+                if (!isCacheImageUsed && completionHandler) {
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File download failed");
@@ -238,7 +281,7 @@
                 if (error || copyDownloadedImageSuccess == NO) {
                     anyError = YES;
                     
-                    if (!isCacheImageUsed) {
+                    if (!isCacheImageUsed && completionHandler) {
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File copy failed");
@@ -261,7 +304,7 @@
                     anyError = YES;
                     [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
                     
-                    if (!isCacheImageUsed) {
+                    if (!isCacheImageUsed && completionHandler) {
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File is not image");
@@ -274,7 +317,7 @@
             
             if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
             
-            if (!anyError && image) {
+            if (!anyError && image && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     

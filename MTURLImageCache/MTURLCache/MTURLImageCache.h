@@ -40,6 +40,7 @@ typedef void (^MTImageCacheCleanStat) (NSDictionary *cleanStatInfo);
 + (id)sharedMTURLImageCache;
 
 -(URLCacheCancellationToken*)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler;
+-(UIImage*)getImageFromURL:(NSString*)urlString;
 
 -(void)removeCachedFileWithURL:(NSString*)urlString;
 -(void)emptyCacheFolder;
