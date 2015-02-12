@@ -7,7 +7,33 @@
 //
 
 #import "ImageCollectionViewCell.h"
+#import "MTURLImageCache.h"
+
+@interface ImageCollectionViewCell ()
+
+@property (nonatomic, strong) URLCacheCancellationToken *cancellationToken;
+
+@end
 
 @implementation ImageCollectionViewCell
+
+-(void)displayImageFromURL:(NSString*)urlString {
+    
+    URLCacheCancellationToken *cancellationToken = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+        
+        if (success) self.imageView.image = image;
+        
+        if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
+        else         NSLog(@"%@",infoMessage);
+        
+    }];
+    
+    self.cancellationToken = cancellationToken;
+}
+
+-(void)prepareForReuse {
+    
+    if (self.cancellationToken) [self.cancellationToken cancel];
+}
 
 @end

@@ -12,4 +12,6 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 
+-(void)displayImageFromURL:(NSString*)urlString;
+
 @end

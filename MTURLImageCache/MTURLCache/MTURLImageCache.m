@@ -571,7 +571,7 @@
     
     if (self.downloadTask) {
         
-        [self.downloadTask cancelByProducingResumeData:NULL];
+        [self.downloadTask cancel];
         self.downloadTask = nil;
     }
 }
