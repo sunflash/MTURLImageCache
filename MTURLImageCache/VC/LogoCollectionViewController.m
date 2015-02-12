@@ -56,19 +56,19 @@
     if (indexPath.row < self.logoURL.count) {
         
         NSString *urlString = [self.logoURL objectAtIndex:indexPath.row];
-        cell.imageView.image = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString];
         
+        //cell.imageView.image = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString];
         
-//        URLCacheCancellationToken *cancellationToken = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString
-//                                                        completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
-//            
-//            if (success) cell.imageView.image = image;
-//            
-//            if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
-//            else         NSLog(@"%@",infoMessage);
-//        }];
-//        
-//        [cancellationToken cancel];
+        URLCacheCancellationToken *cancellationToken = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString
+                                                        completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+            
+            if (success) cell.imageView.image = image;
+            
+            if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
+            else         NSLog(@"%@",infoMessage);
+        }];
+        
+        [cancellationToken cancel];
     }
     
     return cell;

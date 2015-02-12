@@ -118,10 +118,12 @@
         
         NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageUsed)};
         
-        [self fetchImage:imageInfo cancellationToken:cancellationToken completion:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+        NSURLSessionDownloadTask *imageDownloadTask = [self fetchImage:imageInfo cancellationToken:cancellationToken completion:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
             
             completionHandler(success,image,[MTURLImageCache elapsedTimeSinceDate:start],infoMessage);
         }];
+        
+        cancellationToken.downloadTask = imageDownloadTask;
     }
     
     return cancellationToken;
@@ -257,14 +259,17 @@
             
             if (cancellationToken.isCancelled) anyError = cancellationToken.isCancelled;
             
-            if (error || [MTURLImageCache isValidImage:response] == NO) {
-                anyError = YES;
+            if (!anyError) {
                 
-                if (!isCacheImageUsed && completionHandler) {
+                if (error || [MTURLImageCache isValidImage:response] == NO) {
+                    anyError = YES;
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File download failed");
-                    });
+                    if (!isCacheImageUsed && completionHandler) {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File download failed");
+                        });
+                    }
                 }
             }
             
@@ -562,13 +567,13 @@
 
 -(void)cancel {
     
+    self.isCancelled = YES;
+    
     if (self.downloadTask) {
         
         [self.downloadTask cancelByProducingResumeData:NULL];
         self.downloadTask = nil;
     }
-    
-    self.isCancelled = YES;
 }
 
 @end
