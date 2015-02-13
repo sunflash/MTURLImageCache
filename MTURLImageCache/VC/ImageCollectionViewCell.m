@@ -11,13 +11,14 @@
 
 @interface ImageCollectionViewCell ()
 
+@property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) URLCacheCancellationToken *cancellationToken;
 
 @end
 
 @implementation ImageCollectionViewCell
 
--(void)displayImageFromURL:(NSString*)urlString {
+-(void)configureLogo:(NSString*)urlString {
     
     URLCacheCancellationToken *cancellationToken = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
         
@@ -34,6 +35,7 @@
 -(void)prepareForReuse {
     
     if (self.cancellationToken) [self.cancellationToken cancel];
+    self.imageView.image = nil;
 }
 
 @end

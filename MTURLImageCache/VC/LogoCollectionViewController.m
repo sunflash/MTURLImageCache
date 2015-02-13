@@ -51,12 +51,11 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LogoCell" forIndexPath:indexPath];
-    cell.imageView.image = nil;
     
     if (indexPath.row < self.logoURL.count) {
         
         NSString *urlString = [self.logoURL objectAtIndex:indexPath.row];
-        [cell displayImageFromURL:urlString];
+        [cell configureLogo:urlString];
     }
     
     return cell;
@@ -94,13 +93,9 @@
     return url.absoluteString;
 }
 
--(IBAction)emptyLogos:(id)sender {
-
-    [[MTURLImageCache sharedMTURLImageCache] emptyCacheFolder];
-}
-
 -(IBAction)refreshLogos:(id)sender {
 
+    [[MTURLImageCache sharedMTURLImageCache] emptyCacheFolder];
     [self getLogoData];
 }
 

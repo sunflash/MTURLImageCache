@@ -10,8 +10,6 @@
 
 @interface ImageCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, weak) IBOutlet UIImageView *imageView;
-
--(void)displayImageFromURL:(NSString*)urlString;
+-(void)configureLogo:(NSString*)urlString;
 
 @end
