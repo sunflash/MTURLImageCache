@@ -68,33 +68,37 @@
     
     [NetworkTask getDataWithBaseURL:BackendURL path:@"customers" completion:^(BOOL success, NSArray *data) {
         
-        data = [data sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]];
-        
-        NSMutableArray *headerMutableArray = [NSMutableArray new];
-        
-        [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (success && data) {
             
-            NSString *primaryColor    = obj[@"primarycolor"];
-            NSString *secondaryColor  = obj[@"secondarycolor"];
-            NSString *headerTextColor = obj[@"headertextcolor"];
-            NSString *headerURLString = obj[@"headerimageurl"];
-            NSString *companyName     = obj[@"name"];
+            data = [data sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]]];
             
-            if (companyName && companyName.length > 0) {
+            NSMutableArray *headerMutableArray = [NSMutableArray new];
+            
+            [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 
-                NSMutableDictionary *headerMutableDict = [NSMutableDictionary new];
+                NSString *primaryColor    = obj[@"primarycolor"];
+                NSString *secondaryColor  = obj[@"secondarycolor"];
+                NSString *headerTextColor = obj[@"headertextcolor"];
+                NSString *headerURLString = obj[@"headerimageurl"];
+                NSString *companyName     = obj[@"name"];
                 
-                if (companyName && companyName.length > 0)              headerMutableDict[@"companyName"]       = companyName;
-                if (primaryColor && primaryColor.length > 0)            headerMutableDict[@"primaryColor"]      = primaryColor;
-                if (secondaryColor && secondaryColor.length > 0)        headerMutableDict[@"secondaryColor"]    = secondaryColor;
-                if (headerTextColor && headerTextColor.length > 0)      headerMutableDict[@"headerTextColor"]   = headerTextColor;
-                if (headerURLString && headerURLString.length > 0)      headerMutableDict[@"headerURL"]         = headerURLString;
-                
-                [headerMutableArray addObject:[NSDictionary dictionaryWithDictionary:headerMutableDict]];
-            }
-        }];
-        
-        self.HeaderArray = [NSArray arrayWithArray:headerMutableArray];
+                if (companyName && companyName.length > 0) {
+                    
+                    NSMutableDictionary *headerMutableDict = [NSMutableDictionary new];
+                    
+                    if (companyName && companyName.length > 0)              headerMutableDict[@"companyName"]       = companyName;
+                    if (primaryColor && primaryColor.length > 0)            headerMutableDict[@"primaryColor"]      = primaryColor;
+                    if (secondaryColor && secondaryColor.length > 0)        headerMutableDict[@"secondaryColor"]    = secondaryColor;
+                    if (headerTextColor && headerTextColor.length > 0)      headerMutableDict[@"headerTextColor"]   = headerTextColor;
+                    if (headerURLString && headerURLString.length > 0)      headerMutableDict[@"headerURL"]         = headerURLString;
+                    
+                    [headerMutableArray addObject:[NSDictionary dictionaryWithDictionary:headerMutableDict]];
+                }
+            }];
+            
+            self.HeaderArray = [NSArray arrayWithArray:headerMutableArray];
+        }
+
         [self.tableView reloadData];
     }];
 }
