@@ -59,7 +59,7 @@
 		3353B67E1A8E24FE008F03F3 /* HeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderTableViewCell.m; sourceTree = "<group>"; };
 		338F6AE61A8A910C00B4C18C /* CSURITemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSURITemplate.h; sourceTree = "<group>"; };
 		338F6AE71A8A910C00B4C18C /* CSURITemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSURITemplate.m; sourceTree = "<group>"; };
-		339CA1F01A87FEBB009DF431 /* MTURLImageCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTURLImageCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		339CA1F01A87FEBB009DF431 /* Idmaniac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idmaniac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339CA1F41A87FEBB009DF431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		339CA2011A87FEBB009DF431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		339CA2031A87FEBB009DF431 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		339CA1F11A87FEBB009DF431 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				339CA1F01A87FEBB009DF431 /* MTURLImageCache.app */,
+				339CA1F01A87FEBB009DF431 /* Idmaniac.app */,
 				339CA20C1A87FEBB009DF431 /* MTURLImageCacheTests.xctest */,
 			);
 			name = Products;
@@ -352,7 +352,7 @@
 			);
 			name = Idmaniac;
 			productName = MTURLImageCache;
-			productReference = 339CA1F01A87FEBB009DF431 /* MTURLImageCache.app */;
+			productReference = 339CA1F01A87FEBB009DF431 /* Idmaniac.app */;
 			productType = "com.apple.product-type.application";
 		};
 		339CA20B1A87FEBB009DF431 /* MTURLImageCacheTests */ = {
