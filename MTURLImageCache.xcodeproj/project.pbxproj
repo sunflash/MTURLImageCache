@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3353B67C1A8E1D23008F03F3 /* HeaderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3353B67B1A8E1D23008F03F3 /* HeaderTableViewController.m */; };
+		3353B67F1A8E24FE008F03F3 /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3353B67E1A8E24FE008F03F3 /* HeaderTableViewCell.m */; };
 		338F6AE81A8A910C00B4C18C /* CSURITemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 338F6AE71A8A910C00B4C18C /* CSURITemplate.m */; };
 		339CA2021A87FEBB009DF431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2001A87FEBB009DF431 /* Main.storyboard */; };
 		339CA2041A87FEBB009DF431 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2031A87FEBB009DF431 /* Images.xcassets */; };
@@ -51,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3353B67A1A8E1D23008F03F3 /* HeaderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTableViewController.h; sourceTree = "<group>"; };
+		3353B67B1A8E1D23008F03F3 /* HeaderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderTableViewController.m; sourceTree = "<group>"; };
+		3353B67D1A8E24FE008F03F3 /* HeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTableViewCell.h; sourceTree = "<group>"; };
+		3353B67E1A8E24FE008F03F3 /* HeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderTableViewCell.m; sourceTree = "<group>"; };
 		338F6AE61A8A910C00B4C18C /* CSURITemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSURITemplate.h; sourceTree = "<group>"; };
 		338F6AE71A8A910C00B4C18C /* CSURITemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSURITemplate.m; sourceTree = "<group>"; };
 		339CA1F01A87FEBB009DF431 /* MTURLImageCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTURLImageCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -260,6 +266,10 @@
 				33ACE3C01A8A5D17003AE463 /* ImageCollectionViewCell.m */,
 				33ACE3A01A8A4640003AE463 /* LogoCollectionViewController.h */,
 				33ACE3A11A8A4640003AE463 /* LogoCollectionViewController.m */,
+				3353B67D1A8E24FE008F03F3 /* HeaderTableViewCell.h */,
+				3353B67E1A8E24FE008F03F3 /* HeaderTableViewCell.m */,
+				3353B67A1A8E1D23008F03F3 /* HeaderTableViewController.h */,
+				3353B67B1A8E1D23008F03F3 /* HeaderTableViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -429,6 +439,7 @@
 				339CA30E1A882BFF009DF431 /* CryptoHash.m in Sources */,
 				339CA3011A88182C009DF431 /* BFAppLinkTarget.m in Sources */,
 				339CA3081A88182C009DF431 /* Bolts.m in Sources */,
+				3353B67F1A8E24FE008F03F3 /* HeaderTableViewCell.m in Sources */,
 				339CA3021A88182C009DF431 /* BFExecutor.m in Sources */,
 				339CA3001A88182C009DF431 /* BFAppLinkReturnToRefererView.m in Sources */,
 				339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */,
@@ -443,6 +454,7 @@
 				339CA2FF1A88182C009DF431 /* BFAppLinkReturnToRefererController.m in Sources */,
 				33ACE3A51A8A48B1003AE463 /* JSONHalFormatter.m in Sources */,
 				339CA3051A88182C009DF431 /* BFTaskCompletionSource.m in Sources */,
+				3353B67C1A8E1D23008F03F3 /* HeaderTableViewController.m in Sources */,
 				339CA2FE1A88182C009DF431 /* BFAppLinkNavigation.m in Sources */,
 				33ACE3B41A8A4C97003AE463 /* ConnectionDetection.m in Sources */,
 				339CA2FD1A88182C009DF431 /* BFAppLink.m in Sources */,
