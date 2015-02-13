@@ -8,7 +8,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /*! The version of the App Link protocol that this library supports */
 FOUNDATION_EXPORT NSString *const BFAppLinkVersion;

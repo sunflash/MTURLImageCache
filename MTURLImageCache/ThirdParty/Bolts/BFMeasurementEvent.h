@@ -8,7 +8,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /*! The name of the notification posted by BFMeasurementEvent */
 FOUNDATION_EXPORT NSString *const BFMeasurementEventNotificationName;

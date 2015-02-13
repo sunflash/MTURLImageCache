@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Cogenta Systems Ltd. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /**
  The domain of errors returned by `CSURITemplate` objects.

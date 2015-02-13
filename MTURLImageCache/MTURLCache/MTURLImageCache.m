@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 MineTilbud. All rights reserved.
 //
 
-#import <CommonCrypto/CommonDigest.h>
 #import "MTURLImageCache.h"
 #import "AppDirectory.h"
 #import "CryptoHash.h"

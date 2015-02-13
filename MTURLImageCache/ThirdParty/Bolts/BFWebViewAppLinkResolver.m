@@ -8,7 +8,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 #import "BFWebViewAppLinkResolver.h"
 #import "BFAppLink.h"

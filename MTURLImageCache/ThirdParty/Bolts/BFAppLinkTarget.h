@@ -8,7 +8,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /*!
  Represents a target defined in App Link metadata, consisting of at least

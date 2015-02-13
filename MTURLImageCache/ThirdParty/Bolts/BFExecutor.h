@@ -8,7 +8,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /*!
  An object that can run a given block.

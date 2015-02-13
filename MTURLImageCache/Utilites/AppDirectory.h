@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 FK Distribution. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface AppDirectory : NSObject
 

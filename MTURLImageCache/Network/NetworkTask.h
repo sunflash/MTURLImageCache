@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 MineTilbud. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NetworkTask : NSObject
 

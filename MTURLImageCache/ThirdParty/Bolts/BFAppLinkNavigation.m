@@ -8,7 +8,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 #import "BFAppLinkNavigation.h"
 #import "BFTaskCompletionSource.h"
