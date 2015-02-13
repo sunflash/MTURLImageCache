@@ -263,7 +263,7 @@
                             <outlet property="delegate" destination="pTM-1q-5w4" id="Ye4-0J-iat"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="a1C-JC-1aR">
+                    <navigationItem key="navigationItem" title="Header" id="a1C-JC-1aR">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="pho-Kt-AP7">
                             <connections>
                                 <action selector="refreshHeader:" destination="pTM-1q-5w4" id="hGl-fs-M5v"/>
