@@ -13,7 +13,6 @@
 		339CA2021A87FEBB009DF431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2001A87FEBB009DF431 /* Main.storyboard */; };
 		339CA2041A87FEBB009DF431 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2031A87FEBB009DF431 /* Images.xcassets */; };
 		339CA2071A87FEBB009DF431 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339CA2051A87FEBB009DF431 /* LaunchScreen.xib */; };
-		339CA2131A87FEBB009DF431 /* MTURLImageCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2121A87FEBB009DF431 /* MTURLImageCacheTests.m */; };
 		339CA2311A87FF31009DF431 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA21E1A87FF31009DF431 /* AppDelegate.m */; };
 		339CA2321A87FF31009DF431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA21F1A87FF31009DF431 /* main.m */; };
 		339CA2331A87FF31009DF431 /* MTURLImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 339CA2221A87FF31009DF431 /* MTURLImageCache.m */; };
@@ -42,16 +41,6 @@
 		33ACE3C11A8A5D17003AE463 /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33ACE3C01A8A5D17003AE463 /* ImageCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		339CA20D1A87FEBB009DF431 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 339CA1E81A87FEBB009DF431 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 339CA1EF1A87FEBB009DF431;
-			remoteInfo = MTURLImageCache;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		3353B67A1A8E1D23008F03F3 /* HeaderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTableViewController.h; sourceTree = "<group>"; };
 		3353B67B1A8E1D23008F03F3 /* HeaderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderTableViewController.m; sourceTree = "<group>"; };
@@ -64,9 +53,6 @@
 		339CA2011A87FEBB009DF431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		339CA2031A87FEBB009DF431 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		339CA2061A87FEBB009DF431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		339CA20C1A87FEBB009DF431 /* MTURLImageCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTURLImageCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		339CA2111A87FEBB009DF431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		339CA2121A87FEBB009DF431 /* MTURLImageCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MTURLImageCacheTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		339CA21D1A87FF31009DF431 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		339CA21E1A87FF31009DF431 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		339CA21F1A87FF31009DF431 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -135,13 +121,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		339CA2091A87FEBB009DF431 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -158,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				339CA1F21A87FEBB009DF431 /* MTURLImageCache */,
-				339CA20F1A87FEBB009DF431 /* MTURLImageCacheTests */,
 				339CA1F11A87FEBB009DF431 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -167,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				339CA1F01A87FEBB009DF431 /* Idmaniac.app */,
-				339CA20C1A87FEBB009DF431 /* MTURLImageCacheTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,23 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				339CA1F41A87FEBB009DF431 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		339CA20F1A87FEBB009DF431 /* MTURLImageCacheTests */ = {
-			isa = PBXGroup;
-			children = (
-				339CA2121A87FEBB009DF431 /* MTURLImageCacheTests.m */,
-				339CA2101A87FEBB009DF431 /* Supporting Files */,
-			);
-			path = MTURLImageCacheTests;
-			sourceTree = "<group>";
-		};
-		339CA2101A87FEBB009DF431 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				339CA2111A87FEBB009DF431 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -355,24 +315,6 @@
 			productReference = 339CA1F01A87FEBB009DF431 /* Idmaniac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		339CA20B1A87FEBB009DF431 /* MTURLImageCacheTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 339CA2191A87FEBB009DF431 /* Build configuration list for PBXNativeTarget "MTURLImageCacheTests" */;
-			buildPhases = (
-				339CA2081A87FEBB009DF431 /* Sources */,
-				339CA2091A87FEBB009DF431 /* Frameworks */,
-				339CA20A1A87FEBB009DF431 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				339CA20E1A87FEBB009DF431 /* PBXTargetDependency */,
-			);
-			name = MTURLImageCacheTests;
-			productName = MTURLImageCacheTests;
-			productReference = 339CA20C1A87FEBB009DF431 /* MTURLImageCacheTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -384,10 +326,6 @@
 				TargetAttributes = {
 					339CA1EF1A87FEBB009DF431 = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					339CA20B1A87FEBB009DF431 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 339CA1EF1A87FEBB009DF431;
 					};
 				};
 			};
@@ -405,7 +343,6 @@
 			projectRoot = "";
 			targets = (
 				339CA1EF1A87FEBB009DF431 /* Idmaniac */,
-				339CA20B1A87FEBB009DF431 /* MTURLImageCacheTests */,
 			);
 		};
 /* End PBXProject section */
@@ -418,13 +355,6 @@
 				339CA2021A87FEBB009DF431 /* Main.storyboard in Resources */,
 				339CA2071A87FEBB009DF431 /* LaunchScreen.xib in Resources */,
 				339CA2041A87FEBB009DF431 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		339CA20A1A87FEBB009DF431 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,23 +397,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		339CA2081A87FEBB009DF431 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				339CA2131A87FEBB009DF431 /* MTURLImageCacheTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		339CA20E1A87FEBB009DF431 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 339CA1EF1A87FEBB009DF431 /* Idmaniac */;
-			targetProxy = 339CA20D1A87FEBB009DF431 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		339CA2001A87FEBB009DF431 /* Main.storyboard */ = {
@@ -612,40 +526,6 @@
 			};
 			name = Release;
 		};
-		339CA21A1A87FEBB009DF431 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MTURLImageCacheTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MTURLImageCache.app/MTURLImageCache";
-			};
-			name = Debug;
-		};
-		339CA21B1A87FEBB009DF431 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MTURLImageCacheTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MTURLImageCache.app/MTURLImageCache";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -663,15 +543,6 @@
 			buildConfigurations = (
 				339CA2171A87FEBB009DF431 /* Debug */,
 				339CA2181A87FEBB009DF431 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		339CA2191A87FEBB009DF431 /* Build configuration list for PBXNativeTarget "MTURLImageCacheTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				339CA21A1A87FEBB009DF431 /* Debug */,
-				339CA21B1A87FEBB009DF431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
