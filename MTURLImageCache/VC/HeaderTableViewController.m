@@ -32,6 +32,7 @@
     [[MTURLImageCache sharedMTURLImageCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
     
     [self getHeaderData];
+    [self addPushToUpdate];
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -102,6 +103,15 @@
 
     [[MTURLImageCache sharedMTURLImageCache] emptyCacheFolder];
     [self getHeaderData];
+    [self.refreshControl endRefreshing];
+}
+
+-(void)addPushToUpdate {
+    
+    self.refreshControl = [UIRefreshControl new];
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(refreshHeader:) forControlEvents:UIControlEventValueChanged];
 }
 
 @end
