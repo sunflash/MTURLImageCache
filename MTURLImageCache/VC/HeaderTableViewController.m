@@ -98,6 +98,7 @@
             
             self.HeaderArray = [NSArray arrayWithArray:headerMutableArray];
         }
+        else self.headerArray = nil;
 
         [self.tableView reloadData];
     }];

@@ -84,6 +84,7 @@
             
             self.logoURL = [NSArray arrayWithArray:logosURLString];
         }
+        else self.logoURL = nil;
 
         [self.collectionView reloadData];
     }];
