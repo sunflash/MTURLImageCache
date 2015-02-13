@@ -64,9 +64,10 @@
                 
                 if (success) self.headerImageView.image = image;
                 
+#ifdef DEBUG
                 if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
                 else         NSLog(@"%@",infoMessage);
-                
+#endif
             }];
             
             self.cancellationToken = cancellationToken;

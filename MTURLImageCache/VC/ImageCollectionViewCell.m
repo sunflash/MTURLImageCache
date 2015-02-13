@@ -24,8 +24,10 @@
         
         if (success) self.imageView.image = image;
         
+#ifdef DEBUG
         if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
         else         NSLog(@"%@",infoMessage);
+#endif
         
     }];
     
