@@ -92,19 +92,22 @@
     if (!anyError) {
         
         filePath = [self getImagePath:urlString];
-        NSError *error;
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
             
-            UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+            isImageExpired = [self isImageExpired:filePath];
+            isCacheImageUsed = YES;
             
-            if (image) {
-                
-                completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Cached image");
-                isImageExpired = [self isImageExpired:filePath];
-                isCacheImageUsed = YES;
-            }
-            else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                NSError *error;
+                UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+                if (image) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Cached image");
+                    });
+                }
+                else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+            });
         }
     }
     
@@ -169,6 +172,38 @@
     }
     
     return image;
+}
+
+-(void)prefetchImageFromURL:(NSString*)urlString {
+    
+    //===============================
+    // Step 1 - Check URL String
+    
+    BOOL isValidString = [self isValidURLString:urlString];
+    
+    //===============================
+    // Step 2 - Check cache image stat
+    
+    if (isValidString) {
+        
+        NSString *filePath = [self getImagePath:urlString];
+        BOOL isImageExpired = YES;
+        BOOL isCacheImageExist = NO;
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+            isImageExpired = [self isImageExpired:filePath];
+            isCacheImageExist = YES;
+        }
+        
+        //===============================
+        // Step 3 - Fetch new image
+        
+        if (!isCacheImageExist || isImageExpired) {
+            
+            NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageExist)};
+            [self fetchImage:imageInfo cancellationToken:nil completion:NULL];
+        }
+    }
 }
 
 //-------------------------------------------------------------------------------------------------------------
