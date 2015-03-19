@@ -42,6 +42,8 @@ typedef void (^MTImageCacheCleanStat) (NSDictionary *cleanStatInfo);
 -(UIImage*)getImageFromURL:(NSString*)urlString;
 -(void)prefetchImageFromURL:(NSString*)urlString;
 
+-(CGSize)getDiskImageSizeWithoutLoadingIntoMemory:(NSString*)urlString;
+
 -(void)removeCachedFileWithURL:(NSString*)urlString;
 -(void)emptyCacheFolder;
 

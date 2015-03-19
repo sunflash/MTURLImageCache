@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 MineTilbud. All rights reserved.
 //
 
+@import ImageIO;
 #import "MTURLImageCache.h"
 #import "AppDirectory.h"
 #import "CryptoHash.h"
@@ -203,6 +204,13 @@
             [self fetchImage:imageInfo cancellationToken:nil completion:NULL];
         }
     }
+}
+
+-(CGSize)getDiskImageSizeWithoutLoadingIntoMemory:(NSString*)urlString {
+    
+    CGSize imageSize = CGSizeZero;
+    if ([self isValidURLString:urlString]) imageSize = [MTURLImageCache diskImageSize:[self getImagePath:urlString]];
+    return imageSize;
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -432,6 +440,40 @@
 +(NSString*)byteToString:(NSUInteger)byte {
     
     return [NSByteCountFormatter stringFromByteCount:byte countStyle:NSByteCountFormatterCountStyleFile];
+}
+
++(CGSize)diskImageSize:(NSString*)filePath {
+    
+    CGSize diskImageSize = CGSizeZero;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        
+        NSURL *imageFileURL = [NSURL fileURLWithPath:filePath];
+        CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)imageFileURL, NULL);
+        
+        if (imageSource != NULL) {
+            
+            CGFloat width = 0.0f, height = 0.0f;
+            CFDictionaryRef imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
+            
+            if (imageProperties != NULL) {
+                
+                CFNumberRef widthNum  = CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth);
+                if (widthNum != NULL) CFNumberGetValue(widthNum, kCFNumberCGFloatType, &width);
+                
+                CFNumberRef heightNum = CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelHeight);
+                if (heightNum != NULL) CFNumberGetValue(heightNum, kCFNumberCGFloatType, &height);
+                
+                CFRelease(imageProperties);
+            }
+            
+            CFRelease(imageSource);
+            
+            if (width != 0 && height != 0) diskImageSize = CGSizeMake(width, height);
+        }
+    }
+    
+    return diskImageSize;
 }
 
 //-------------------------------------------------------------------------------------------------------------
