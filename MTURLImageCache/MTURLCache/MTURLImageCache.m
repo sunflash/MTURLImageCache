@@ -14,6 +14,7 @@
 @interface MTURLImageCache ()
 
 @property (nonatomic, strong) NSURLSession *urlSession;
+@property (nonatomic, strong) NSString *cacheFolderPath;
 
 @end
 
@@ -32,7 +33,10 @@
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         self.urlSession                          = [NSURLSession sessionWithConfiguration:configuration];
         self.expiredMaxAgeInSeconds              = defaultExpiredMaxAgeInSeconds;
-        self.cacheFolderName                     = (name && name.length > 0) ? name : @"default";
+        if (name.length == 0) {
+            name = @"default";
+        }
+        self.cacheFolderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,name];
     }
     
     return self;
@@ -44,12 +48,7 @@
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-    
-        urlImageCache                            = [MTURLImageCache new];
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        urlImageCache.urlSession                 = [NSURLSession sessionWithConfiguration:configuration];
-        urlImageCache.expiredMaxAgeInSeconds     = defaultExpiredMaxAgeInSeconds;
-        urlImageCache.cacheFolderName            = @"default";
+        urlImageCache = [[MTURLImageCache alloc] initWithName:nil];
     });
     
     return urlImageCache;
@@ -224,7 +223,7 @@
 
 -(NSString*)getImagePath:(NSString*)urlString {
     
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName,[CryptoHash md5:urlString]];
+    NSString *filePath = [self.cacheFolderPath stringByAppendingPathComponent:[CryptoHash md5:urlString]];
     return filePath;
 }
 
@@ -268,8 +267,7 @@
     
     if (!anyError) {
         
-        NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
-        BOOL isFolderExist = [self createFolderIfNotExist:folderPath];
+        BOOL isFolderExist = [self createFolderIfNotExist:self.cacheFolderPath];
         
         if (isFolderExist == NO) {
             anyError = YES;
@@ -444,7 +442,7 @@
     
     if (urlString && urlString.length > 0) {
         
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName,[CryptoHash md5:urlString]];
+        NSString *filePath = [self getImagePath:urlString];
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL];
         
     }
@@ -453,8 +451,8 @@
 -(void)emptyCacheFolder {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    
-        NSString *folderPath = [NSString stringWithFormat:@"%@/%@/%@",[AppDirectory applicationCachePath],defulatCacheRootFolderName,self.cacheFolderName];
+        
+        NSString *folderPath = self.cacheFolderPath;
         [[NSFileManager defaultManager] removeItemAtPath:folderPath error:NULL];
         [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:NULL];
     });
