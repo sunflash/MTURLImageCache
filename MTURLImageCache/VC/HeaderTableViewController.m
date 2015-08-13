@@ -96,7 +96,7 @@
                 }
             }];
             
-            self.HeaderArray = [NSArray arrayWithArray:headerMutableArray];
+            self.headerArray = [NSArray arrayWithArray:headerMutableArray];
         }
         else self.headerArray = nil;
 
