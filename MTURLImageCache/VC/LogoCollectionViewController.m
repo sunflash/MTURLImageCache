@@ -10,7 +10,7 @@
 #import "ImageCollectionViewCell.h"
 #import "NetworkParameter.h"
 #import "NetworkTask.h"
-#import "MTURLImageCache.h"
+#import "MTURLCache.h"
 #import "CSURITemplate.h"
 
 @interface LogoCollectionViewController ()
@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[MTURLImageCache sharedMTURLImageCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
+    [[MTURLCache sharedMTURLCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
     
     [self getLogoData];
 }
@@ -100,7 +100,7 @@
 
 -(IBAction)refreshLogos:(id)sender {
 
-    [[MTURLImageCache sharedMTURLImageCache] emptyCacheFolder];
+    [[MTURLCache sharedMTURLCache] emptyCacheFolder];
     [self getLogoData];
 }
 

@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AppDirectory.h"
-#import "MTURLImageCache.h"
+#import "MTURLCache.h"
 
 @interface AppDelegate ()
 
@@ -33,7 +33,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    [MTURLImageCache backgroundCleanDisk];
+    [MTURLCache backgroundCleanDisk];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

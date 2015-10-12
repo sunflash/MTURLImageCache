@@ -1,25 +1,25 @@
 //
-//  MTURLImageCache.m
-//  MTURLImageCache
+//  MTURLCache.m
+//  MTURLCache
 //
 //  Created by Neon on 04/02/15.
 //  Copyright (c) 2015 MineTilbud. All rights reserved.
 //
 
 @import ImageIO;
-#import "MTURLImageCache.h"
+#import "MTURLCache.h"
 #import "AppDirectory.h"
 #import "CryptoHash.h"
 #import "ImageDecoder.h"
 
-@interface MTURLImageCache ()
+@interface MTURLCache ()
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic, strong) NSString *cacheFolderPath;
 
 @end
 
-@implementation MTURLImageCache
+@implementation MTURLCache
 
 //-------------------------------------------------------------------------------------------------------------
 
@@ -43,16 +43,16 @@
     return self;
 }
 
-+ (id)sharedMTURLImageCache {
++ (id)sharedMTURLCache {
     
-    static MTURLImageCache *urlImageCache = nil;
+    static MTURLCache *urlCache = nil;
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        urlImageCache = [[MTURLImageCache alloc] initWithName:nil];
+        urlCache = [[MTURLCache alloc] initWithName:nil];
     });
     
-    return urlImageCache;
+    return urlCache;
 }
 
 -(void)setSessionHTTPAdditionalHeaders:(NSDictionary *)sessionHTTPAdditionalHeaders {
@@ -70,7 +70,7 @@
 
 #pragma mark - Function
 
--(URLCacheCancellationToken*)getImageFromURL:(NSString *)urlString completionHandler:(MTImageCacheResponse)completionHandler {
+-(URLCacheCancellationToken*)getObjectFromURL:(NSString *)urlString completionHandler:(MTCacheResponse)completionHandler {
     
     NSDate *start = [NSDate date];
     BOOL anyError = NO;
@@ -80,7 +80,7 @@
     
     anyError = ![self isValidURLString:urlString];
     
-    if (anyError) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Wrong url parameter");
+    if (anyError) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Wrong url parameter");
     
     //===============================
     // Step 2 - Return cache image
@@ -103,7 +103,7 @@
                 UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
                 if (image) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Cached image");
+                        completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:start],@"Cached image");
                     });
                 }
                 else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
@@ -122,7 +122,7 @@
         
         NSURLSessionDownloadTask *imageDownloadTask = [self fetchImage:imageInfo cancellationToken:cancellationToken completion:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
             
-            completionHandler(success,image,[MTURLImageCache elapsedTimeSinceDate:start],infoMessage);
+            completionHandler(success,image,[MTURLCache elapsedTimeSinceDate:start],infoMessage);
         }];
         
         cancellationToken.downloadTask = imageDownloadTask;
@@ -131,7 +131,7 @@
     return cancellationToken;
 }
 
--(UIImage*)getImageFromURL:(NSString*)urlString {
+-(id)getObjectFromURL:(NSString*)urlString {
     
     UIImage *image = nil;
     
@@ -174,7 +174,7 @@
     return image;
 }
 
--(void)prefetchImageFromURL:(NSString*)urlString {
+-(void)prefetchObjectFromURL:(NSString*)urlString {
     
     //===============================
     // Step 1 - Check URL String
@@ -209,7 +209,7 @@
 -(CGSize)getDiskImageSizeWithoutLoadingIntoMemory:(NSString*)urlString {
     
     CGSize imageSize = CGSizeZero;
-    if ([self isValidURLString:urlString]) imageSize = [MTURLImageCache diskImageSize:[self getImagePath:urlString]];
+    if ([self isValidURLString:urlString]) imageSize = [MTURLCache diskImageSize:[self getImagePath:urlString]];
     return imageSize;
 }
 
@@ -235,7 +235,7 @@
     return filePath;
 }
 
--(NSURLSessionDownloadTask*)fetchImage:(NSDictionary*)imageInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTImageCacheResponse)completionHandler {
+-(NSURLSessionDownloadTask*)fetchImage:(NSDictionary*)imageInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
     
     NSDate *start = [NSDate date];
     
@@ -244,7 +244,7 @@
     if (cancellationToken.isCancelled) return nil;
     
     if (!imageInfo) {
-        if (completionHandler) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"No image info");
+        if (completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"No image info");
         return nil;
     }
     
@@ -263,7 +263,7 @@
     }
     
     if (!urlString || !filePath) {
-        if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Not valid image info");
+        if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Not valid image info");
         return nil;
     }
     
@@ -274,7 +274,7 @@
     BOOL isFolderExist = [self createFolderIfNotExist:self.cacheFolderPath];
     
     if (isFolderExist == NO) {
-        if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"Create folder failed");
+        if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Create folder failed");
         return  nil;
     }
     
@@ -288,12 +288,12 @@
         
         if (cancellationToken.isCancelled) return;
         
-        if (error || [MTURLImageCache isValidImage:response] == NO) {
+        if (error || [MTURLCache isValidImage:response] == NO) {
             
             if (!isCacheImageUsed && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File download failed");
+                    completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File download failed");
                 });
             }
             return;
@@ -312,7 +312,7 @@
             if (!isCacheImageUsed && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File copy failed");
+                    completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File copy failed");
                 });
             }
             return;
@@ -331,7 +331,7 @@
             if (!isCacheImageUsed && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(NO,nil,[MTURLImageCache elapsedTimeSinceDate:start],@"File is not image");
+                    completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File is not image");
                 });
             }
             return;
@@ -345,7 +345,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                completionHandler(YES,image,[MTURLImageCache elapsedTimeSinceDate:start],@"Fresh image");
+                completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:start],@"Fresh image");
             });
         }
     }];
@@ -504,11 +504,11 @@
     });
 }
 
-+(void)cleanDiskWithCompletionAsync:(MTImageCacheCleanStat)completionBlock {
++(void)cleanDiskWithCompletionAsync:(MTCacheCleanStat)completionBlock {
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
-        [MTURLImageCache cleanDiskWithCompletion:^(NSDictionary *cleanStatInfo) {
+        [MTURLCache cleanDiskWithCompletion:^(NSDictionary *cleanStatInfo) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -518,7 +518,7 @@
     });
 }
 
-+(void)cleanDiskWithCompletion:(MTImageCacheCleanStat)completionBlock {
++(void)cleanDiskWithCompletion:(MTCacheCleanStat)completionBlock {
     
     NSUInteger beforeFileCount = 0;
     NSUInteger beforeCacheSize = 0;
@@ -592,10 +592,10 @@
     NSDictionary *cleanStatDict = @{@"BeforeFilesCount":@(beforeFileCount),
                                     @"CurretFilesCount":@(beforeFileCount-fileDeletedCount),
                                     @"FilesDeletedCount":@(fileDeletedCount),
-                                    @"BeforeCacheSize":[MTURLImageCache byteToString:beforeCacheSize],
-                                    @"CurrentCacheSize":[MTURLImageCache byteToString:currentCacheSize],
-                                    @"DeletedFilesSiz":[MTURLImageCache byteToString:(beforeCacheSize-currentCacheSize)],
-                                    @"CleanElapsedTime":@([MTURLImageCache elapsedTimeSinceDate:startDate])};
+                                    @"BeforeCacheSize":[MTURLCache byteToString:beforeCacheSize],
+                                    @"CurrentCacheSize":[MTURLCache byteToString:currentCacheSize],
+                                    @"DeletedFilesSiz":[MTURLCache byteToString:(beforeCacheSize-currentCacheSize)],
+                                    @"CleanElapsedTime":@([MTURLCache elapsedTimeSinceDate:startDate])};
     
     if (completionBlock) {
         completionBlock(cleanStatDict);

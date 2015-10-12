@@ -10,7 +10,7 @@
 #import "HeaderTableViewCell.h"
 #import "NetworkParameter.h"
 #import "NetworkTask.h"
-#import "MTURLImageCache.h"
+#import "MTURLCache.h"
 #import "CSURITemplate.h"
 
 @interface HeaderTableViewController ()
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[MTURLImageCache sharedMTURLImageCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
+    [[MTURLCache sharedMTURLCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
     
     [self getHeaderData];
     [self addPushToUpdate];
@@ -106,7 +106,7 @@
 
 -(IBAction)refreshHeader:(id)sender {
 
-    [[MTURLImageCache sharedMTURLImageCache] emptyCacheFolder];
+    [[MTURLCache sharedMTURLCache] emptyCacheFolder];
     [self getHeaderData];
     [self.refreshControl endRefreshing];
 }

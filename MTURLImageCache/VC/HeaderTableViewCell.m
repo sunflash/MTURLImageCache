@@ -7,7 +7,7 @@
 //
 
 #import "HeaderTableViewCell.h"
-#import "MTURLImageCache.h"
+#import "MTURLCache.h"
 
 @interface HeaderTableViewCell ()
 
@@ -60,7 +60,7 @@
         
         if (headerURLString && headerURLString.length > 0) {
             
-            URLCacheCancellationToken *cancellationToken = [[MTURLImageCache sharedMTURLImageCache] getImageFromURL:headerURLString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+            URLCacheCancellationToken *cancellationToken = [[MTURLCache sharedMTURLCache] getObjectFromURL:headerURLString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
                 
                 if (success) self.headerImageView.image = image;
                 
