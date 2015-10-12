@@ -105,39 +105,41 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 + (instancetype)reachabilityWithHostName:(NSString *)hostName
 {
-	Reachability* returnValue = NULL;
-	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
-	if (reachability != NULL)
-	{
-		returnValue= [[self alloc] init];
-		if (returnValue != NULL)
-		{
-			returnValue->_reachabilityRef = reachability;
-			returnValue->_alwaysReturnLocalWiFiStatus = NO;
-		}
-	}
+    Reachability* returnValue = NULL;
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
+    if (reachability != NULL)
+    {
+        returnValue= [[self alloc] init];
+        if (returnValue != NULL)
+        {
+            returnValue->_reachabilityRef = reachability;
+            returnValue->_alwaysReturnLocalWiFiStatus = NO;
+        }
+        else CFRelease(reachability);
+    }
+    
 	return returnValue;
 }
 
 
 + (instancetype)reachabilityWithAddress:(const struct sockaddr_in *)hostAddress
 {
-	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)hostAddress);
-
-	Reachability* returnValue = NULL;
-
-	if (reachability != NULL)
-	{
-		returnValue = [[self alloc] init];
-		if (returnValue != NULL)
-		{
-			returnValue->_reachabilityRef = reachability;
-			returnValue->_alwaysReturnLocalWiFiStatus = NO;
-		}
-	}
-	return returnValue;
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)hostAddress);
+    
+    Reachability* returnValue = NULL;
+    
+    if (reachability != NULL)
+    {
+        returnValue = [[self alloc] init];
+        if (returnValue != NULL)
+        {
+            returnValue->_reachabilityRef = reachability;
+            returnValue->_alwaysReturnLocalWiFiStatus = NO;
+        }
+        else CFRelease(reachability);
+    }
+    return returnValue;
 }
-
 
 
 + (instancetype)reachabilityForInternetConnection
