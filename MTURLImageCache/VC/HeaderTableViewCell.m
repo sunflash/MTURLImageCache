@@ -60,9 +60,9 @@
         
         if (headerURLString && headerURLString.length > 0) {
             
-            URLCacheCancellationToken *cancellationToken = [[MTURLCache sharedMTURLCache] getObjectFromURL:headerURLString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+            URLCacheCancellationToken *cancellationToken = [[MTURLCache sharedMTURLImageCache] getObjectFromURL:headerURLString completionHandler:^(BOOL success, id object, NSTimeInterval fetchTime, NSString *infoMessage) {
                 
-                if (success) self.headerImageView.image = image;
+                if (success) self.headerImageView.image = object;
                 
 #ifdef DEBUG
                 if (success) NSLog(@"%@ %f",infoMessage,fetchTime);

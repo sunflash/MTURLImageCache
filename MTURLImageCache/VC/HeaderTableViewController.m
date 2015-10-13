@@ -106,7 +106,7 @@
 
 -(IBAction)refreshHeader:(id)sender {
 
-    [[MTURLCache sharedMTURLCache] emptyCacheFolder];
+    [[MTURLCache sharedMTURLImageCache] emptyCacheFolder];
     [self getHeaderData];
     [self.refreshControl endRefreshing];
 }

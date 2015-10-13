@@ -58,7 +58,7 @@ typedef NS_ENUM(NSUInteger,CacheObjectType) {
 
 #pragma mark - Get/Prefetch Object
 
-typedef void (^MTCacheResponse)(BOOL success,id cacheObject, NSTimeInterval fetchTime, NSString *infoMessage);
+typedef void (^MTCacheResponse)(BOOL success,id object, NSTimeInterval fetchTime, NSString *infoMessage);
 
 -(URLCacheCancellationToken*)getObjectFromURL:(NSString *)urlString completionHandler:(MTCacheResponse)completionHandler;
 -(id)getObjectFromURL:(NSString*)urlString;

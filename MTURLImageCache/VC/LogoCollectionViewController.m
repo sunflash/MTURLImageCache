@@ -100,7 +100,7 @@
 
 -(IBAction)refreshLogos:(id)sender {
 
-    [[MTURLCache sharedMTURLCache] emptyCacheFolder];
+    [[MTURLCache sharedMTURLImageCache] emptyCacheFolder];
     [self getLogoData];
 }
 

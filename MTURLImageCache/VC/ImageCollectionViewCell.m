@@ -20,9 +20,9 @@
 
 -(void)configureLogo:(NSString*)urlString {
     
-    URLCacheCancellationToken *cancellationToken = [[MTURLCache sharedMTURLCache] getObjectFromURL:urlString completionHandler:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
+    URLCacheCancellationToken *cancellationToken = [[MTURLCache sharedMTURLImageCache] getObjectFromURL:urlString completionHandler:^(BOOL success, id object, NSTimeInterval fetchTime, NSString *infoMessage) {
         
-        if (success) self.imageView.image = image;
+        if (success) self.imageView.image = object;
         
 #ifdef DEBUG
         if (success) NSLog(@"%@ %f",infoMessage,fetchTime);
