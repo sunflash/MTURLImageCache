@@ -50,9 +50,37 @@
     
     dispatch_once(&onceToken, ^{
         urlCache = [[MTURLCache alloc] initWithName:nil];
+        urlCache.cacheObjectType = CacheObjectTypeUnknown;
     });
     
     return urlCache;
+}
+
++ (id)sharedMTURLImageCache {
+    
+    static MTURLCache *urlImageCache = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        urlImageCache = [[MTURLCache alloc] initWithName:@"Image"];
+        urlImageCache.cacheObjectType = CacheObjectTypeImage;
+    });
+    
+    return urlImageCache;
+}
+
++ (id)sharedMTURLJSONCache {
+    
+    static MTURLCache *urlJSONCache = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        urlJSONCache = [[MTURLCache alloc] initWithName:@"JSON"];
+        urlJSONCache.cacheObjectType = CacheObjectTypeJSON;
+        urlJSONCache.expiredMaxAgeInSeconds = 60*30;
+    });
+    
+    return urlJSONCache;
 }
 
 -(void)setSessionHTTPAdditionalHeaders:(NSDictionary *)sessionHTTPAdditionalHeaders {
@@ -71,6 +99,8 @@
 #pragma mark - Function
 
 -(URLCacheCancellationToken*)getObjectFromURL:(NSString *)urlString completionHandler:(MTCacheResponse)completionHandler {
+    
+    if (!completionHandler) return nil;
     
     NSDate *start = [NSDate date];
     BOOL anyError = NO;
@@ -100,15 +130,9 @@
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 
-                // TODO:Image to object
-                NSError *error;
-                UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-                if (image) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:start],@"Cached image");
-                    });
-                }
-                else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                [self returnObjectInFilePath:filePath withStartDate:start completionHandler:^(BOOL success, id cacheObject, NSTimeInterval fetchTime, NSString *infoMessage) {
+                    completionHandler(success,cacheObject,fetchTime,infoMessage);
+                }];
             });
         }
     }
@@ -133,7 +157,7 @@
     
     return cancellationToken;
 }
-
+// TODO:
 -(id)getObjectFromURL:(NSString*)urlString {
     
     id object = nil;
@@ -176,7 +200,7 @@
     
     return object;
 }
-
+// TODO:
 -(void)prefetchObjectFromURL:(NSString*)urlString {
     
     //===============================
@@ -238,6 +262,34 @@
     return filePath;
 }
 
+-(void)returnObjectInFilePath:(NSString*)filePath withStartDate:(NSDate*)startDate completionHandler:(MTCacheResponse)completionHandler {
+    
+    if (completionHandler) {
+        
+        if (!startDate) startDate = [NSDate date];
+        
+        if (self.cacheObjectType == CacheObjectTypeImage) {
+            
+            NSError *error;
+            UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+            if (image) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached image");
+                });
+            }
+            else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+        }
+        else if (self.cacheObjectType == CacheObjectTypeJSON) {
+            
+            // TODO:hello
+        }
+        else [NSData dataWithContentsOfFile:filePath];
+    }
+}
+
+
+
+// TODO://
 -(NSURLSessionDownloadTask*)fetchObject:(NSDictionary*)objectInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
     
     NSDate *start = [NSDate date];

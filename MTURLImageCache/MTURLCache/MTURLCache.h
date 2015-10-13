@@ -28,7 +28,7 @@
 
 #define defulatCacheRootFolderName       @"MTUCF"
 #define defaultMaxCachePeriodInDays      21
-#define defaultGlobalDiskCapacityMB      100
+#define defaultGlobalDiskCapacityMB      300
 
 #define defaultExpiredMaxAgeInSeconds    60*60*24
 
@@ -36,14 +36,23 @@
 
 #pragma mark - Cache Interface
 
+typedef NS_ENUM(NSUInteger,CacheObjectType) {
+    CacheObjectTypeUnknown,
+    CacheObjectTypeImage,
+    CacheObjectTypeJSON
+};
+
 @interface MTURLCache : NSObject
 
 // Default 1 day, 60*60*24
 @property (nonatomic) NSTimeInterval expiredMaxAgeInSeconds;
 @property (nonatomic, strong) NSDictionary *sessionHTTPAdditionalHeaders;
+@property (nonatomic) CacheObjectType cacheObjectType;
 
 -(instancetype)initWithName:(NSString*)name;
 + (id)sharedMTURLCache;
++ (id)sharedMTURLJSONCache;
++ (id)sharedMTURLImageCache;
 
 //-------------------------------------------------------------------------------
 
