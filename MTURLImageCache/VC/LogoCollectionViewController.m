@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[MTURLCache sharedMTURLCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
+    [[MTURLCache sharedMTURLJSONCache] setSessionHTTPAdditionalHeaders:@{@"ocp-apim-subscription-key":BackendAccessKey,@"API-Authorization":BackendAPIKey}];
     
     [self getLogoData];
 }
