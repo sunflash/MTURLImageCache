@@ -83,22 +83,24 @@
     if (anyError) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Wrong url parameter");
     
     //===============================
-    // Step 2 - Return cache image
+    // Step 2 - Return cache object
     
-    BOOL isImageExpired = YES;
-    BOOL isCacheImageUsed = NO;
+    BOOL isObjectExpired = YES;
+    BOOL isCacheObjectUsed = NO;
     NSString *filePath = nil;
     
     if (!anyError) {
         
-        filePath = [self getImagePath:urlString];
+        filePath = [self getObjectPath:urlString];
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
             
-            isImageExpired = [self isImageExpired:filePath];
-            isCacheImageUsed = YES;
+            isObjectExpired = [self isObjectExpired:filePath];
+            isCacheObjectUsed = YES;
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
+                // TODO:Image to object
                 NSError *error;
                 UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
                 if (image) {
@@ -112,20 +114,21 @@
     }
     
     //===============================
-    // Step 3 - Fetch new image
+    // Step 3 - Fetch new object
     
     URLCacheCancellationToken *cancellationToken = [URLCacheCancellationToken new];
     
-    if (!anyError && (!isCacheImageUsed || isImageExpired)) {
+    if (!anyError && (!isCacheObjectUsed || isObjectExpired)) {
         
-        NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageUsed)};
+        NSDictionary *objectInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheObjectUsed":@(isCacheObjectUsed)};
         
-        NSURLSessionDownloadTask *imageDownloadTask = [self fetchImage:imageInfo cancellationToken:cancellationToken completion:^(BOOL success, UIImage *image, NSTimeInterval fetchTime, NSString *infoMessage) {
-            
-            completionHandler(success,image,[MTURLCache elapsedTimeSinceDate:start],infoMessage);
+        NSURLSessionDownloadTask *objectDownloadTask = [self fetchObject:objectInfo cancellationToken:cancellationToken completion:^(BOOL success, id cacheObject, NSTimeInterval fetchTime, NSString *infoMessage) {
+
+            // TODO:Deserielize json
+            completionHandler(success,cacheObject,[MTURLCache elapsedTimeSinceDate:start],infoMessage);
         }];
         
-        cancellationToken.downloadTask = imageDownloadTask;
+        cancellationToken.downloadTask = objectDownloadTask;
     }
     
     return cancellationToken;
@@ -133,7 +136,7 @@
 
 -(id)getObjectFromURL:(NSString*)urlString {
     
-    UIImage *image = nil;
+    id object = nil;
     
     //===============================
     // Step 1 - Check URL String
@@ -142,36 +145,36 @@
     if (!isValidString) return nil;
     
     //===============================
-    // Step 2 - Return cache image
+    // Step 2 - Return cache object
     
-    NSString *filePath = [self getImagePath:urlString];
-    BOOL isImageExpired = YES;
-    BOOL isCacheImageUsed = NO;
+    NSString *filePath = [self getObjectPath:urlString];
+    BOOL isObjectExpired = YES;
+    BOOL isCacheObjectUsed = NO;
     
     NSError *error;
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         
-        image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+        object = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
         
-        if (image) {
+        if (object) {
             
-            isImageExpired = [self isImageExpired:filePath];
-            isCacheImageUsed = YES;
+            isObjectExpired = [self isObjectExpired:filePath];
+            isCacheObjectUsed = YES;
         }
         else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
     }
     
     //===============================
-    // Step 3 - Fetch new image
+    // Step 3 - Fetch new object
     
-    if (!isCacheImageUsed || isImageExpired) {
+    if (!isCacheObjectUsed || isObjectExpired) {
         
-        NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageUsed)};
-        [self fetchImage:imageInfo cancellationToken:nil completion:NULL];
+        NSDictionary *objectInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheObjectUsed":@(isCacheObjectUsed)};
+        [self fetchObject:objectInfo cancellationToken:nil completion:NULL];
     }
     
-    return image;
+    return object;
 }
 
 -(void)prefetchObjectFromURL:(NSString*)urlString {
@@ -182,26 +185,26 @@
     BOOL isValidString = [self isValidURLString:urlString];
     
     //===============================
-    // Step 2 - Check cache image stat
+    // Step 2 - Check cache object stat
     
     if (isValidString) {
         
-        NSString *filePath = [self getImagePath:urlString];
-        BOOL isImageExpired = YES;
-        BOOL isCacheImageExist = NO;
+        NSString *filePath = [self getObjectPath:urlString];
+        BOOL isObjectExpired = YES;
+        BOOL isCacheObjectExist = NO;
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-            isImageExpired = [self isImageExpired:filePath];
-            isCacheImageExist = YES;
+            isObjectExpired = [self isObjectExpired:filePath];
+            isCacheObjectExist = YES;
         }
         
         //===============================
         // Step 3 - Fetch new image
         
-        if (!isCacheImageExist || isImageExpired) {
+        if (!isCacheObjectExist || isObjectExpired) {
             
-            NSDictionary *imageInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheImageUsed":@(isCacheImageExist)};
-            [self fetchImage:imageInfo cancellationToken:nil completion:NULL];
+            NSDictionary *objectInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheObjectUsed":@(isCacheObjectExist)};
+            [self fetchObject:objectInfo cancellationToken:nil completion:NULL];
         }
     }
 }
@@ -209,7 +212,7 @@
 -(CGSize)getDiskImageSizeWithoutLoadingIntoMemory:(NSString*)urlString {
     
     CGSize imageSize = CGSizeZero;
-    if ([self isValidURLString:urlString]) imageSize = [MTURLCache diskImageSize:[self getImagePath:urlString]];
+    if ([self isValidURLString:urlString]) imageSize = [MTURLCache diskImageSize:[self getObjectPath:urlString]];
     return imageSize;
 }
 
@@ -229,13 +232,13 @@
     return NO;
 }
 
--(NSString*)getImagePath:(NSString*)urlString {
+-(NSString*)getObjectPath:(NSString*)urlString {
     
     NSString *filePath = [self.cacheFolderPath stringByAppendingPathComponent:[CryptoHash md5:urlString]];
     return filePath;
 }
 
--(NSURLSessionDownloadTask*)fetchImage:(NSDictionary*)imageInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
+-(NSURLSessionDownloadTask*)fetchObject:(NSDictionary*)objectInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
     
     NSDate *start = [NSDate date];
     
@@ -243,8 +246,8 @@
     
     if (cancellationToken.isCancelled) return nil;
     
-    if (!imageInfo) {
-        if (completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"No image info");
+    if (!objectInfo) {
+        if (completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"No object info");
         return nil;
     }
     
@@ -252,18 +255,18 @@
     
     if (cancellationToken.isCancelled) return nil;
     
-    BOOL isCacheImageUsed = NO;
+    BOOL isCacheObjectUsed = NO;
     NSString *urlString = nil;
     NSString *filePath = nil;
     
-    urlString = imageInfo[@"url"];
-    filePath = imageInfo[@"filePath"];
-    if (imageInfo[@"isCacheImageUsed"]) {
-        isCacheImageUsed = [imageInfo[@"isCacheImageUsed"] boolValue];
+    urlString = objectInfo[@"url"];
+    filePath = objectInfo[@"filePath"];
+    if (objectInfo[@"isCacheObjectUsed"]) {
+        isCacheObjectUsed = [objectInfo[@"isCacheObjectUsed"] boolValue];
     }
     
     if (!urlString || !filePath) {
-        if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Not valid image info");
+        if (!isCacheObjectUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Not valid object info");
         return nil;
     }
     
@@ -274,7 +277,7 @@
     BOOL isFolderExist = [self createFolderIfNotExist:self.cacheFolderPath];
     
     if (isFolderExist == NO) {
-        if (!isCacheImageUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Create folder failed");
+        if (!isCacheObjectUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Create folder failed");
         return  nil;
     }
     
@@ -282,7 +285,7 @@
     
     if (cancellationToken.isCancelled) return nil;
     
-    NSURLSessionDownloadTask *imageDownloadTask = [[self urlSession] downloadTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+    NSURLSessionDownloadTask *objectDownloadTask = [[self urlSession] downloadTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
         //===============================
         
@@ -290,7 +293,7 @@
         
         if (error || [MTURLCache isValidImage:response] == NO) {
             
-            if (!isCacheImageUsed && completionHandler) {
+            if (!isCacheObjectUsed && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File download failed");
@@ -309,7 +312,7 @@
         
         if (error || copyDownloadedImageSuccess == NO) {
             
-            if (!isCacheImageUsed && completionHandler) {
+            if (!isCacheObjectUsed && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File copy failed");
@@ -328,7 +331,7 @@
             
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
             
-            if (!isCacheImageUsed && completionHandler) {
+            if (!isCacheObjectUsed && completionHandler) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File is not image");
@@ -350,9 +353,9 @@
         }
     }];
     
-    [imageDownloadTask resume];
+    [objectDownloadTask resume];
     
-    return imageDownloadTask;
+    return objectDownloadTask;
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -376,9 +379,9 @@
     return [[NSFileManager defaultManager] fileExistsAtPath:folderPath isDirectory:&yes];
 }
 
--(BOOL)isImageExpired:(NSString*)filePath {
+-(BOOL)isObjectExpired:(NSString*)filePath {
     
-    BOOL isImageExpired = YES;
+    BOOL isObjectExpired = YES;
 
     NSError *error;
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:&error];
@@ -388,10 +391,10 @@
         NSDate *date = [attributes fileModificationDate];
         NSTimeInterval fileAge = -[date timeIntervalSinceNow];
         
-        if (fileAge < self.expiredMaxAgeInSeconds) isImageExpired = NO;
+        if (fileAge < self.expiredMaxAgeInSeconds) isObjectExpired = NO;
     }
      
-    return isImageExpired;
+    return isObjectExpired;
 }
 
 + (BOOL)isValidImage:(NSURLResponse *)response {
@@ -462,7 +465,7 @@
     
     if (urlString && urlString.length > 0) {
         
-        NSString *filePath = [self getImagePath:urlString];
+        NSString *filePath = [self getObjectPath:urlString];
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL];
         
     }
