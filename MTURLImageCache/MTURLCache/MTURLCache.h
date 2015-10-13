@@ -46,13 +46,18 @@ typedef NS_ENUM(NSUInteger,CacheObjectType) {
 
 // Default 1 day, 60*60*24
 @property (nonatomic) NSTimeInterval expiredMaxAgeInSeconds;
+// Rememeber to set any access key, authorization key, token in headers once if require
 @property (nonatomic, strong) NSDictionary *sessionHTTPAdditionalHeaders;
+// Must set cacheObjectType if use custom cache -(instancetype)initWithName:(NSString*)name;
 @property (nonatomic) CacheObjectType cacheObjectType;
 
+// Do NOT use "default","JSON","Image" as name for custom cache.
+// It's already use by shared caches.
 -(instancetype)initWithName:(NSString*)name;
-+ (id)sharedMTURLCache;
-+ (id)sharedMTURLJSONCache;
-+ (id)sharedMTURLImageCache;
+
++ (id)sharedMTURLCache;         // save file to subfolder "default"
++ (id)sharedMTURLJSONCache;     // save file to subfolder "JSON"
++ (id)sharedMTURLImageCache;    // save file to subfolder "Image"
 
 //-------------------------------------------------------------------------------
 
