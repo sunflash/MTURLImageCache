@@ -287,10 +287,10 @@
     }
 }
 
-
-
 // TODO://
 -(NSURLSessionDownloadTask*)fetchObject:(NSDictionary*)objectInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
+    
+    if (!completionHandler) return nil;
     
     NSDate *start = [NSDate date];
     
@@ -299,7 +299,7 @@
     if (cancellationToken.isCancelled) return nil;
     
     if (!objectInfo) {
-        if (completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"No object info");
+        completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"No object info");
         return nil;
     }
     
@@ -318,7 +318,7 @@
     }
     
     if (!urlString || !filePath) {
-        if (!isCacheObjectUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Not valid object info");
+        if (!isCacheObjectUsed) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Not valid object info");
         return nil;
     }
     
@@ -329,7 +329,7 @@
     BOOL isFolderExist = [self createFolderIfNotExist:self.cacheFolderPath];
     
     if (isFolderExist == NO) {
-        if (!isCacheObjectUsed && completionHandler) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Create folder failed");
+        if (!isCacheObjectUsed) completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Create folder failed");
         return  nil;
     }
     
@@ -345,7 +345,7 @@
         
         if (error || [MTURLCache isValidImage:response] == NO) {
             
-            if (!isCacheObjectUsed && completionHandler) {
+            if (!isCacheObjectUsed) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File download failed");
@@ -364,7 +364,7 @@
         
         if (error || copyDownloadedImageSuccess == NO) {
             
-            if (!isCacheObjectUsed && completionHandler) {
+            if (!isCacheObjectUsed) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File copy failed");
@@ -383,7 +383,7 @@
             
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
             
-            if (!isCacheObjectUsed && completionHandler) {
+            if (!isCacheObjectUsed) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File is not image");
@@ -396,7 +396,7 @@
         
         if (cancellationToken.isCancelled) return;
         
-        if (image && completionHandler) {
+        if (image) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
