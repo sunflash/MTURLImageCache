@@ -222,7 +222,7 @@
         }
         
         //===============================
-        // Step 3 - Fetch new image
+        // Step 3 - Fetch new object
         
         if (!isCacheObjectExist || isObjectExpired) {
             
@@ -484,7 +484,6 @@
     
     return [MTURLCache isValidResponse:response mimeTypes:@[@"image/jpeg",@"image/png"]];
 }
-
 
 -(BOOL)isValidResponse:(NSURLResponse *)response {
     
