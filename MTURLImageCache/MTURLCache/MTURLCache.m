@@ -448,19 +448,28 @@
 
 #pragma mark - URL response validation
 
-+(BOOL)isValidResponse:(NSURLResponse *)response mimeTypes:(NSArray*)mimeTypes {
++(BOOL)isValidDataResponse:(NSURLResponse*)response {
     
-    BOOL isValidResponse = NO;
+    BOOL isValidDataResponse = NO;
     
-    if (response && mimeTypes && [response isKindOfClass:[NSHTTPURLResponse class]] && mimeTypes.count > 0) {
+    if (response && [response isKindOfClass:[NSHTTPURLResponse class]]) {
         
         NSHTTPURLResponse *httpResponse = (id)response;
         NSInteger statusCodeHundreds = floorf(httpResponse.statusCode / 100);
         
-        if (statusCodeHundreds == 2 || statusCodeHundreds == 3) {
-            
-            isValidResponse = ([mimeTypes containsObject:response.MIMEType.lowercaseString]) ? YES : NO;
-        }
+        if (statusCodeHundreds == 2 || statusCodeHundreds == 3) isValidDataResponse = YES;
+    }
+    
+    return isValidDataResponse;
+}
+
++(BOOL)isValidResponse:(NSURLResponse *)response mimeTypes:(NSArray*)mimeTypes {
+    
+    BOOL isValidResponse = NO;
+    
+    if ([self isValidDataResponse:response] == YES && mimeTypes && mimeTypes.count > 0) {
+        
+        isValidResponse = ([mimeTypes containsObject:response.MIMEType.lowercaseString]) ? YES : NO;
     }
     
     return isValidResponse;
@@ -476,20 +485,6 @@
     return [MTURLCache isValidResponse:response mimeTypes:@[@"image/jpeg",@"image/png"]];
 }
 
-+(BOOL)isValidDataResponse:(NSURLResponse*)response {
-    
-    BOOL isValidDataResponse = NO;
-    
-    if (response && [response isKindOfClass:[NSHTTPURLResponse class]]) {
-        
-        NSHTTPURLResponse *httpResponse = (id)response;
-        NSInteger statusCodeHundreds = floorf(httpResponse.statusCode / 100);
-        
-        if (statusCodeHundreds == 2 || statusCodeHundreds == 3) isValidDataResponse = YES;
-    }
-    
-    return isValidDataResponse;
-}
 
 -(BOOL)isValidResponse:(NSURLResponse *)response {
     
