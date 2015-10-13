@@ -268,26 +268,43 @@
         
         if (!startDate) startDate = [NSDate date];
         
+        BOOL isFileInvalid = NO;
+        
         if (self.cacheObjectType == CacheObjectTypeImage) {
             
-            NSError *error;
             UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
             if (image) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached image");
                 });
             }
-            else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+            else isFileInvalid = YES;
         }
         else if (self.cacheObjectType == CacheObjectTypeJSON) {
             
-            // TODO:hello
+            id object = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+            if (object) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionHandler(YES,object,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached json");
+                });
+            }
+            else isFileInvalid = YES;
         }
-        else [NSData dataWithContentsOfFile:filePath];
+        else {
+            
+            NSData *data = [NSData dataWithContentsOfFile:filePath];
+            if (data) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionHandler(YES,data,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached data");
+                });
+            }
+            else isFileInvalid = YES;
+        }
+        
+        if (isFileInvalid == YES) [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL];
     }
 }
 
-// TODO://
 -(NSURLSessionDownloadTask*)fetchObject:(NSDictionary*)objectInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
     
     if (!completionHandler) return nil;
@@ -343,7 +360,7 @@
         
         if (cancellationToken.isCancelled) return;
         
-        if (error || [MTURLCache isValidImage:response] == NO) {
+        if (error || [self isValidResponse:response] == NO) {
             
             if (!isCacheObjectUsed) {
                 
@@ -360,9 +377,9 @@
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         [fileManager removeItemAtPath:filePath error:NULL];
-        BOOL copyDownloadedImageSuccess = [fileManager copyItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&error];
+        BOOL copyDownloadedObjectSuccess = [fileManager copyItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&error];
         
-        if (error || copyDownloadedImageSuccess == NO) {
+        if (error || copyDownloadedObjectSuccess == NO) {
             
             if (!isCacheObjectUsed) {
                 
@@ -377,31 +394,80 @@
         
         if (cancellationToken.isCancelled) return;
         
-        UIImage *image  = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-        
-        if (!image) {
+        if (self.cacheObjectType == CacheObjectTypeJSON) {
             
-            [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+            BOOL isJSONSerializationSuccess = NO;
+            NSData *data = [NSData dataWithContentsOfFile:filePath];
+            id jsonObject = nil;
             
-            if (!isCacheObjectUsed) {
+            if (data) {
+                [fileManager removeItemAtPath:filePath error:NULL];
+                jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                if (jsonObject) isJSONSerializationSuccess = [NSKeyedArchiver archiveRootObject:jsonObject toFile:filePath];
+            }
+            
+            if (isJSONSerializationSuccess == NO) {
+                
+                if (!isCacheObjectUsed) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"Deserilize json or save NSObject to disk failed");
+                    });
+                }
+                return;
+            }
+            else {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File is not image");
+                    
+                    completionHandler(YES,jsonObject,[MTURLCache elapsedTimeSinceDate:start],@"Fresh JSON");
                 });
             }
-            return;
         }
-        
-        //===============================
-        
-        if (cancellationToken.isCancelled) return;
-        
-        if (image) {
+        else if (self.cacheObjectType == CacheObjectTypeImage) {
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            //===============================
+            
+            UIImage *image  = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+            
+            if (!image) {
                 
-                completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:start],@"Fresh image");
-            });
+                [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                
+                if (!isCacheObjectUsed) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionHandler(NO,nil,[MTURLCache elapsedTimeSinceDate:start],@"File is not image");
+                    });
+                }
+                return;
+            }
+            
+            //===============================
+            
+            if (cancellationToken.isCancelled) return;
+            
+            if (image) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:start],@"Fresh image");
+                });
+            }
+        }
+        else {
+            
+            //===============================
+            
+            NSData *data = [NSData dataWithContentsOfFile:filePath];
+            
+            if (data) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    completionHandler(YES,data,[MTURLCache elapsedTimeSinceDate:start],@"Fresh Data");
+                });
+            }
         }
     }];
     
@@ -449,9 +515,9 @@
     return isObjectExpired;
 }
 
-+ (BOOL)isValidImage:(NSURLResponse *)response {
+-(BOOL)isValidResponse:(NSURLResponse *)response {
     
-    BOOL isValidImage = NO;
+    BOOL isValidResponse = NO;
     
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         
@@ -460,14 +526,34 @@
         
         if (statusCodeHundreds == 2 || statusCodeHundreds == 3) {
             
-            NSString *jpegMIMEType = @"image/jpeg";
-            NSString *pngMIMEType = @"image/png";
+            if (self.cacheObjectType == CacheObjectTypeImage) {
+                
+                isValidResponse = [MTURLCache isImageMIMEType:response];
+            }
+            else if (self.cacheObjectType == CacheObjectTypeJSON) {
             
-            isValidImage = ([response.MIMEType isEqualToString:jpegMIMEType] || [response.MIMEType isEqualToString:pngMIMEType]) ?  YES : NO;
+                isValidResponse = [MTURLCache isJSONMIMEType:response];
+            }
+            else isValidResponse = YES;
         }
     }
+    return isValidResponse;
+}
+
++(BOOL)isImageMIMEType:(NSURLResponse*)response {
     
-    return isValidImage;
+    NSString *jpegMIMEType = @"image/jpeg";
+    NSString *pngMIMEType = @"image/png";
+    NSString *MIMETypeLowerCase = [response.MIMEType lowercaseString];
+    return ([MIMETypeLowerCase isEqualToString:jpegMIMEType] || [MIMETypeLowerCase isEqualToString:pngMIMEType]) ?  YES : NO;
+}
+
++(BOOL)isJSONMIMEType:(NSURLResponse*)response {
+    
+    NSString *jsonMIMEType = @"application/json";
+    NSString *jsonpMIMEType = @"application/javascript";
+    NSString *MIMETypeLowerCase = [response.MIMEType lowercaseString];
+    return ([MIMETypeLowerCase isEqualToString:jsonMIMEType] || [MIMETypeLowerCase isEqualToString:jsonpMIMEType]) ? YES : NO;
 }
 
 +(NSString*)byteToString:(NSUInteger)byte {
