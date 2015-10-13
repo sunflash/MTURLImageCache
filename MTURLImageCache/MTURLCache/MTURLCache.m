@@ -130,9 +130,13 @@
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 
-                [self returnObjectInFilePath:filePath withStartDate:start completionHandler:^(BOOL success, id cacheObject, NSTimeInterval fetchTime, NSString *infoMessage) {
-                    completionHandler(success,cacheObject,fetchTime,infoMessage);
-                }];
+                id object = [self getObjectInFilePath:filePath];
+                if (object) {
+                    NSString *infoString = [NSString stringWithFormat:@"Cached %@",[self objectTypeString:object]];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionHandler(YES,object,[MTURLCache elapsedTimeSinceDate:start],infoString);
+                    });
+                }
             });
         }
     }
@@ -147,8 +151,7 @@
         NSDictionary *objectInfo = @{@"url":urlString,@"filePath":filePath,@"isCacheObjectUsed":@(isCacheObjectUsed)};
         
         NSURLSessionDownloadTask *objectDownloadTask = [self fetchObject:objectInfo cancellationToken:cancellationToken completion:^(BOOL success, id cacheObject, NSTimeInterval fetchTime, NSString *infoMessage) {
-
-            // TODO:Deserielize json
+            
             completionHandler(success,cacheObject,[MTURLCache elapsedTimeSinceDate:start],infoMessage);
         }];
         
@@ -157,7 +160,7 @@
     
     return cancellationToken;
 }
-// TODO:
+
 -(id)getObjectFromURL:(NSString*)urlString {
     
     id object = nil;
@@ -175,18 +178,14 @@
     BOOL isObjectExpired = YES;
     BOOL isCacheObjectUsed = NO;
     
-    NSError *error;
-    
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         
-        object = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-        
+        id object = [self getObjectInFilePath:filePath];
+
         if (object) {
-            
             isObjectExpired = [self isObjectExpired:filePath];
             isCacheObjectUsed = YES;
         }
-        else [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
     }
     
     //===============================
@@ -200,7 +199,7 @@
     
     return object;
 }
-// TODO:
+
 -(void)prefetchObjectFromURL:(NSString*)urlString {
     
     //===============================
@@ -262,47 +261,16 @@
     return filePath;
 }
 
--(void)returnObjectInFilePath:(NSString*)filePath withStartDate:(NSDate*)startDate completionHandler:(MTCacheResponse)completionHandler {
+-(id)getObjectInFilePath:(NSString*)filePath  {
     
-    if (completionHandler) {
-        
-        if (!startDate) startDate = [NSDate date];
-        
-        BOOL isFileInvalid = NO;
-        
-        if (self.cacheObjectType == CacheObjectTypeImage) {
-            
-            UIImage *image = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-            if (image) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(YES,image,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached image");
-                });
-            }
-            else isFileInvalid = YES;
-        }
-        else if (self.cacheObjectType == CacheObjectTypeJSON) {
-            
-            id object = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-            if (object) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(YES,object,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached json");
-                });
-            }
-            else isFileInvalid = YES;
-        }
-        else {
-            
-            NSData *data = [NSData dataWithContentsOfFile:filePath];
-            if (data) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(YES,data,[MTURLCache elapsedTimeSinceDate:startDate],@"Cached data");
-                });
-            }
-            else isFileInvalid = YES;
-        }
-        
-        if (isFileInvalid == YES) [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL];
-    }
+    id object = nil;
+    
+    if (self.cacheObjectType == CacheObjectTypeImage)       object = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+    else if (self.cacheObjectType == CacheObjectTypeJSON)   object = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+    else                                                    object = [NSData dataWithContentsOfFile:filePath];
+    
+    if (!object) [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL]; // Object is not valid
+    return object;
 }
 
 -(NSURLSessionDownloadTask*)fetchObject:(NSDictionary*)objectInfo cancellationToken:(URLCacheCancellationToken*)cancellationToken completion:(MTCacheResponse)completionHandler {
@@ -593,6 +561,24 @@
     }
     
     return diskImageSize;
+}
+
+-(NSString*)objectTypeString:(id)object {
+    
+    NSString *objectType = nil;
+    
+    if (!object) {
+        objectType = @"NULL";
+    }
+    else if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSDictionary class]]) {
+        objectType = @"json";
+    }
+    else if ([object isKindOfClass:[UIImage class]]) {
+        objectType = @"image";
+    }
+    else objectType = @"data";
+    
+    return objectType;
 }
 
 //-------------------------------------------------------------------------------------------------------------
