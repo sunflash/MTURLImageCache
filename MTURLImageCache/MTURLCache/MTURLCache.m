@@ -446,6 +446,70 @@
 
 //-------------------------------------------------------------------------------------------------------------
 
+#pragma mark - URL response validation
+
++(BOOL)isValidResponse:(NSURLResponse *)response mimeTypes:(NSArray*)mimeTypes {
+    
+    BOOL isValidResponse = NO;
+    
+    if (response && mimeTypes && [response isKindOfClass:[NSHTTPURLResponse class]] && mimeTypes.count > 0) {
+        
+        NSHTTPURLResponse *httpResponse = (id)response;
+        NSInteger statusCodeHundreds = floorf(httpResponse.statusCode / 100);
+        
+        if (statusCodeHundreds == 2 || statusCodeHundreds == 3) {
+            
+            isValidResponse = ([mimeTypes containsObject:response.MIMEType.lowercaseString]) ? YES : NO;
+        }
+    }
+    
+    return isValidResponse;
+}
+
++(BOOL)isValidJSONResponse:(NSURLResponse *)response {
+    
+    return [MTURLCache isValidResponse:response mimeTypes:@[@"application/json",@"application/hal+json",@"application/javascript"]];
+}
+
++(BOOL)isValidImageResponse:(NSURLResponse*)response {
+    
+    return [MTURLCache isValidResponse:response mimeTypes:@[@"image/jpeg",@"image/png"]];
+}
+
++(BOOL)isValidDataResponse:(NSURLResponse*)response {
+    
+    BOOL isValidDataResponse = NO;
+    
+    if (response && [response isKindOfClass:[NSHTTPURLResponse class]]) {
+        
+        NSHTTPURLResponse *httpResponse = (id)response;
+        NSInteger statusCodeHundreds = floorf(httpResponse.statusCode / 100);
+        
+        if (statusCodeHundreds == 2 || statusCodeHundreds == 3) isValidDataResponse = YES;
+    }
+    
+    return isValidDataResponse;
+}
+
+-(BOOL)isValidResponse:(NSURLResponse *)response {
+    
+    BOOL isValidResponse = NO;
+    
+    if (self.cacheObjectType == CacheObjectTypeImage) {
+        
+        isValidResponse = [MTURLCache isValidImageResponse:response];
+    }
+    else if (self.cacheObjectType == CacheObjectTypeJSON) {
+        
+        isValidResponse = [MTURLCache isValidJSONResponse:response];
+    }
+    else isValidResponse = [MTURLCache isValidDataResponse:response];
+    
+    return isValidResponse;
+}
+
+//-------------------------------------------------------------------------------------------------------------
+
 #pragma mark - Utilites
 
 +(NSTimeInterval)elapsedTimeSinceDate:(NSDate*)date {
@@ -481,47 +545,6 @@
     }
      
     return isObjectExpired;
-}
-
--(BOOL)isValidResponse:(NSURLResponse *)response {
-    
-    BOOL isValidResponse = NO;
-    
-    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-        
-        NSHTTPURLResponse *httpResponse = (id)response;
-        NSInteger statusCodeHundreds = httpResponse.statusCode / 100;
-        
-        if (statusCodeHundreds == 2 || statusCodeHundreds == 3) {
-            
-            if (self.cacheObjectType == CacheObjectTypeImage) {
-                
-                isValidResponse = [MTURLCache isImageMIMEType:response];
-            }
-            else if (self.cacheObjectType == CacheObjectTypeJSON) {
-            
-                isValidResponse = [MTURLCache isJSONMIMEType:response];
-            }
-            else isValidResponse = YES;
-        }
-    }
-    return isValidResponse;
-}
-
-+(BOOL)isImageMIMEType:(NSURLResponse*)response {
-    
-    NSString *jpegMIMEType = @"image/jpeg";
-    NSString *pngMIMEType = @"image/png";
-    NSString *MIMETypeLowerCase = [response.MIMEType lowercaseString];
-    return ([MIMETypeLowerCase isEqualToString:jpegMIMEType] || [MIMETypeLowerCase isEqualToString:pngMIMEType]) ?  YES : NO;
-}
-
-+(BOOL)isJSONMIMEType:(NSURLResponse*)response {
-    
-    NSString *jsonMIMEType = @"application/json";
-    NSString *jsonpMIMEType = @"application/javascript";
-    NSString *MIMETypeLowerCase = [response.MIMEType lowercaseString];
-    return ([MIMETypeLowerCase isEqualToString:jsonMIMEType] || [MIMETypeLowerCase isEqualToString:jsonpMIMEType]) ? YES : NO;
 }
 
 +(NSString*)byteToString:(NSUInteger)byte {
