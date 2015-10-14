@@ -42,6 +42,10 @@
     self.defaultSession = [NSURLSession sessionWithConfiguration:configuration];
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#pragma mark - Response validation
+
 +(BOOL)isValidResponse:(NSURLResponse *)response mimeTypes:(NSArray*)mimeTypes {
     
     BOOL isValidResponse = NO;
@@ -89,6 +93,10 @@
     
     return isValidResponse;
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#pragma mark - Function
 
 +(NSDate*)getCacheExpireDate:(NSURLResponse*)response {
     
