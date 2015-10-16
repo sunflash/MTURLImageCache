@@ -125,19 +125,15 @@
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
             
-            isObjectExpired = [self isObjectExpired:filePath];
-            isCacheObjectUsed = YES;
+            id object = [self getObjectInFilePath:filePath];
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            if (object) {
+                isObjectExpired = [self isObjectExpired:filePath];
+                isCacheObjectUsed = YES;
                 
-                id object = [self getObjectInFilePath:filePath];
-                if (object) {
-                    NSString *infoString = [NSString stringWithFormat:@"Cached %@",[self objectTypeString:object]];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionHandler(YES,object,[MTURLCache elapsedTimeSinceDate:start],infoString);
-                    });
-                }
-            });
+                NSString *infoString = [NSString stringWithFormat:@"Cached %@",[self objectTypeString:object]];
+                completionHandler(YES,object,[MTURLCache elapsedTimeSinceDate:start],infoString);
+            }
         }
     }
     
