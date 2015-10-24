@@ -176,7 +176,7 @@
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         
-        id object = [self getObjectInFilePath:filePath];
+        object = [self getObjectInFilePath:filePath];
 
         if (object) {
             isObjectExpired = [self isObjectExpired:filePath];
