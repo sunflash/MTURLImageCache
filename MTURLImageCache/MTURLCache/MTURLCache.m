@@ -261,9 +261,13 @@
     
     id object = nil;
     
-    if (self.cacheObjectType == CacheObjectTypeImage)       object = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
-    else if (self.cacheObjectType == CacheObjectTypeJSON)   object = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-    else                                                    object = [NSData dataWithContentsOfFile:filePath];
+    if (self.cacheObjectType == CacheObjectTypeImage)  object = [ImageDecoder decompressedImage:[UIImage imageWithContentsOfFile:filePath]];
+    else if (self.cacheObjectType == CacheObjectTypeJSON) {
+        
+        @try {object = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];}
+        @catch (NSException* exception) {}
+    }
+    else object = [NSData dataWithContentsOfFile:filePath];
     
     if (!object) [[NSFileManager defaultManager] removeItemAtPath:filePath error:NULL]; // Object is not valid
     return object;
@@ -466,6 +470,8 @@
     if ([self isValidDataResponse:response] == YES && mimeTypes && mimeTypes.count > 0) {
         
         isValidResponse = ([mimeTypes containsObject:response.MIMEType.lowercaseString]) ? YES : NO;
+    } else {
+        isValidResponse = [[response.URL scheme] isEqualToString:@"file"]; // Allow local files to be loaded
     }
     
     return isValidResponse;
