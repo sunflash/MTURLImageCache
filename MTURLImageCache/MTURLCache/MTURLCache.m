@@ -468,10 +468,7 @@
     BOOL isValidResponse = NO;
     
     if ([self isValidDataResponse:response] == YES && mimeTypes && mimeTypes.count > 0) {
-        
         isValidResponse = ([mimeTypes containsObject:response.MIMEType.lowercaseString]) ? YES : NO;
-    } else {
-        isValidResponse = [[response.URL scheme] isEqualToString:@"file"]; // Allow local files to be loaded
     }
     
     return isValidResponse;
