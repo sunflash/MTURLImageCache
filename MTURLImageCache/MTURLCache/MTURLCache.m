@@ -243,7 +243,7 @@
 
     if (urlString && urlString.length > 0) {
         
-        urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURLComponents *urlComponent = [NSURLComponents componentsWithString:urlString];
         if (urlComponent) return YES;
     }

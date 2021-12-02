@@ -202,7 +202,7 @@
 +(CGSize)getAppFrameSize {
 
     CGSize appFrameSize;
-    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
+    CGRect applicationFrame = [UIScreen mainScreen].bounds;
     
     ScreenOrientation screenOrientation = [self getScreenOrientation];
     
@@ -222,7 +222,7 @@
 +(CGSize)getAppFrameSize:(UIInterfaceOrientation)interfaceOrientation {
 
     CGSize appFrameSize;
-    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
+    CGRect applicationFrame = [UIScreen mainScreen].bounds;
     
     if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
         

@@ -76,6 +76,7 @@
 }
 
 -(void)prepareForReuse {
+    [super prepareForReuse];
     
     if (self.cancellationToken) [self.cancellationToken cancel];
     
